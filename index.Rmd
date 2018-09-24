@@ -41,6 +41,29 @@ Big trees that are closer to each other might compete more intensely, or they mi
 <hr>
 <br>
 
+<a class="anchor" id="research"></a>
+
+<h1>RESEARCH</h1>
+
+<br>
+
+<article>
+<h3><a href="talk-2018-09-ucla-cpl.html">This is a research area</a></h3>
+<div class="summary">
+<span><i class="fa fa-calendar"></i> _2018-09_</span>
+<p>Place where this happends | City</p>
+<a class="btn btn-outline-primary btn-sm" href="talk-2018-09-ucla-cpl.html" role="button">Slides</a>
+</div>
+</article>
+
+<br>
+
+<a class="btn btn-outline-secondary btn-lg" href="talks.html" role="button">All Talks</a>
+
+<br>
+<hr>
+<br>
+
 <a class="anchor" id="about"></a>
 
 <h1>ABOUT ME</h1>
@@ -63,25 +86,4 @@ I'm a doctoral student and research associate at Colorado State University. I ha
 
 <br>
 <hr>
-<br>
-
-<a class="anchor" id="talks"></a>
-
-<h1>TALKS</h1>
-
-<br>
-
-<article>
-<h3><a href="talk-2018-09-ucla-cpl.html">This is a talk title</a></h3>
-<div class="summary">
-<span><i class="fa fa-calendar"></i> _2018-09_</span>
-<p>Place where this happends | City</p>
-<a class="btn btn-outline-primary btn-sm" href="talk-2018-09-ucla-cpl.html" role="button">Slides</a>
-</div>
-</article>
-
-<br>
-
-<a class="btn btn-outline-secondary btn-lg" href="talks.html" role="button">All Talks</a>
-
 <br>
