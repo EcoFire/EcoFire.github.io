@@ -1,0 +1,201 @@
+---
+title: "CRITICAL DATA ANALYSIS"
+output:
+  html_document:
+    excludes:
+      before_body: _navbar.html
+    includes:
+      before_body: navbar_home.html
+      after_body: footer.html
+---
+
+> This site is an avenue for me to share either data analysis techniques I find novel or interesting and/or ideas or thoughts from my undergrad background in continental philosophy and French / German literature.  Sometimes I find these two areas of interest to overlap and other times I elect to dedicate a post to just one of my pursuits.
+
+<br>
+<hr>
+<br>
+
+<a class="anchor" id="about"></a>
+
+<h1>ABOUT ME</h1>
+
+<br>
+
+<img id="img-me" src="site_content/img/me.jpeg" width="300px" height="auto">
+
+<br>
+
+<h3>THE BRIEF BIO</h3>
+
+<br>
+
+> I am a father and husband who is passionate about code, complexity, design, dichotomy busting, cuisine, travel, and striving for balance across the board in my life.  I love conceptual thinking and am always working to expand my worldview through the acquisition of knowledge.  With this site, I hope to document what I learn and share what I know.
+
+<br>
+
+<h3>STILL CURIOUS? READ ON:</h3>
+
+<br>
+
+My Master’s degree is in Information Science (MSIS).  Furthermore, I also completed both the Information Systems program of study; a narrower focus within the MSIS degree as well as a Graduate Academic Certificate (GAC) in Digital Content Management.  The MSIS is designed for information work in many different fields from information brokerage, database analytics, chief information officer, user experience designer, information architect, knowledge manager, system librarian, and many more.  The information systems track taught me how to support my organization to gain strategic and tactical competitive advantages, which we can call knowledge management or business intelligence.  It supports more technical knowledge and builds more technical skills than the other tracks within the MSIS.  Last, the GAC in Digital Content Management provided me with a theoretical foundation and conceptual toolkit to help me manage digital content, build applications, and develop services that respond to institutional and individual user needs.
+
+<br>
+
+I hope to contribute posts on my site that interact with my interdisciplinary interests with special focus on the semantic relationships between objects and concepts.  I’m not always as interested in the epistemological aspect of things as I might appear–really I think I enjoy metaphysical speculation (otherwise, why would I have become interested in philosophy at all?).  I believe that everything is connected, and the 21st century will be about discovering these connections—hopefully I can be a part of this.
+
+<br>
+
+For the full bio click [here](about.html) or the button below.
+
+<br>
+
+<a class="btn btn-outline-secondary btn-lg" href="about.html" role="button">Full Bio</a>
+
+
+<br>
+<hr>
+<br>
+
+<a class="anchor" id="blog-posts"></a>
+
+<h1>BLOG</h1>
+
+<br>
+
+<article>
+<h3><a href="blog-uptake-fellowship-start.html">REFLECTIONS ON THE START OF MY DATA FELLOWSHIP WITH UPTAKE</a></h3>
+<div class="summary">
+<p>I can't believe it's been more than a week since I returned from my trip to Chicago. This was an incredible opportunity and before I start this post a few thank yous are in order: I really can't thank [Uptake](www.uptake.com) enough for being the kind of company that does more than just 'have an mission statement'--having the motivation to start a philanthropic arm...</p>
+<a class="btn btn-outline-primary btn-sm" href="blog-uptake-fellowship-start.html" role="button">Full Post</a>
+</div>
+</article>
+
+<article>
+<h3><a href="blog-adv-of-code-day-one.html">ADVENT OF CODE IN R: DAY 1</a></h3>
+<div class="summary">
+<p> Over on the `rOpenSci` Slack, [Sam](https://twitter.com/samfirke) asked if anyone was doing the (Advent of Code)[http://adventofcode.com/] challenges in R.  A few others said they were interested and I decided to go for it as well!  My solutions...</p>
+<a class="btn btn-outline-primary btn-sm" href="">Full Post</a>
+</div>
+</article>
+
+<article>
+<h3><a href="blog-vaccine-heatmap.html">RECREATING THE VACCINE HEATMAP IN PLOTLY 4.0+ WITH R</a></h3>
+<div class="summary">
+<p>This took me a while to figure out how to implement.  Since `plotly` 4.0+ is so different and the documentation is still rolling out I wanted to challenge myself to make something complicated to better understand how things have changed...</p>
+<a class="btn btn-outline-primary btn-sm" href="blog-vaccine-heatmap.html">Full Post</a>
+</div>
+</article>
+
+<article>
+<h3><a href="blog-building-site-with-rmarkdown.html">BUILDING THIS SITE WITH RSTUDIO AND RMARKDOWN</a></h3>
+<div class="summary">
+<p>There _may_ be a special place in hell for blog posts like this that document how someone put together their static site website and hosted it on GitHub.  Especially when there is really great [documentation](rmarkdown.rstudio.com/rmarkdown_websites.html) availible that has been put together by really smart people.  You can even look at Rmarkdown's website source code on [GitHub](https://github.com/rstudio/rmarkdown/tree/gh-pages) to see...</p>
+<a class="btn btn-outline-primary btn-sm" href="blog-building-site-with-rmarkdown.html">Full Post</a>
+</div>
+</article>
+
+<a class="btn btn-outline-secondary btn-lg" href="blog.html" role="button">More Posts</a>
+
+<br>
+<hr>
+<br>
+
+<a class="anchor" id="talks"></a>
+
+<h1>TALKS</h1>
+
+<br>
+
+<article>
+<h3><a href="talk-2018-09-ucla-cpl.html">Thoughts and perspectives on PSH from the ground</a></h3>
+<div class="summary">
+<span><i class="fa fa-calendar"></i> _2018-09_</span>
+<p>UCLA, California Policy Lab | Los angeles, CA</p>
+<a class="btn btn-outline-primary btn-sm" href="talk-2018-09-ucla-cpl.html" role="button">Slides</a>
+</div>
+</article>
+
+<br>
+
+<article>
+<h3><a href="talk-2017-09-data-donuts.html">Ex-nihilo data analysis; getting up and running with limited resources</a></h3>
+<div class="summary">
+<span><i class="fa fa-calendar"></i> _2017-09_</span>
+<p>Data + Donuts | Los angeles, CA</p>
+<a class="btn btn-outline-primary btn-sm" href="talk-2017-09-data-donuts.html" role="button">Slides</a>
+</div>
+</article>
+
+<a class="btn btn-outline-secondary btn-lg" href="talks.html" role="button">All Talks</a>
+
+<br>
+<br>
+<br>
+
+<a class="anchor" id="vitae"></a>
+
+<h1>VITAE</h1>
+
+<br>
+
+<h3><i class="fa fa-graduation-cap fa-lg"></i>  Education</h3>
+
+<br>
+
+<ul>  
+  <i class="fa fa-angle-double-right fa-lg"></i> University of North Texas | Master of Science in Information Science (2013)
+</ul>
+<ul>
+  <i class="fa fa-angle-double-right fa-lg"></i> University of California, Los Angeles (UCLA) | Bachelor of Arts in French and comparative literature (2008 / double major)
+</ul>
+<ul>
+  <i class="fa fa-angle-double-right fa-lg"></i>   Universit&#233; de la Sorbonne Nouvelle (Paris III) | Student exchange (2006---2007)
+</ul>
+
+<br>
+
+<h3><i class="fa fa-institution fa-lg"></i>  Work Experience</h3>
+
+<br>
+
+<!-- SRHT / Data Analyst -->
+<ul>  
+  <h3>Skid Row Housing Trust_Los Angeles, CA</h3>
+  <h4>Data Analyst / August 2015---Present</h4>
+  <ul>
+  <i class="fa fa-angle-double-right fa-lg"></i> provide strategic oversight to organization's data collection systems and reporting processes through the collection and anslysis of data, reporting on and capturing of outcome metrics, and providing input to create a more data-driven culture
+  </ul>
+  <ul>
+  <i class="fa fa-angle-double-right fa-lg"></i>   responsible for identifying, monitoring, and evaluating program and organizational outcomes to ensure compliance and effectiveness of programming
+  </ul>
+  <ul>
+  <i class="fa fa-angle-double-right fa-lg"></i> exploring open-source database alternatives to reduce organizational cost and fit within the IT ecosystem
+  </ul>
+  <ul>
+  <i class="fa fa-angle-double-right fa-lg"></i> liaise with internal departments for reporting/proposal questions, demographic data, and to answer questions about the Resident Programs department's model and outcomes strategy
+  </ul>
+  <ul>
+  <i class="fa fa-angle-double-right fa-lg"></i> prepare recurring and special aggregated data reports and related decision support tools for Resident Programs department (and organization if needed) to support analytics value chain: data<i class="fa fa-arrow-right"></i>reporting<i class="fa fa-arrow-right"></i>analysis<i class="fa fa-arrow-right"></i>action<i class="fa fa-arrow-right"></i>value
+  </ul>
+  <ul>
+  <i class="fa fa-angle-double-right fa-lg"></i> oversee the application and implementation of assessment procedures; provides feedback and training in its use and answers questions about what is tracked and why
+  </ul>
+  <ul>
+  <i class="fa fa-angle-double-right fa-lg"></i> gathers, formats, and analyzes data using descriptive and inferential statics with visualizations of outcome metrics to enable the organization to tell its narrative with data
+  </ul>
+  <ul>
+  <i class="fa fa-angle-double-right fa-lg"></i> acting as core Efforts to Outcomes database administrator for the Resident Programs department; provides additional database support / programming support to internal departments as requested
+  </ul>
+  <ul>
+  <i class="fa fa-angle-double-right fa-lg"></i> working on data warehousing solutions to support executive dashbord to track high-level concerns
+  </ul>
+  <ul>
+  <i class="fa fa-angle-double-right fa-lg"></i> liaise with external organizations, research institutions, and contractors / consultants interested in or currently conducting research with residents to answer questions about what we currently are using to track outcomes / offer support
+  </ul>
+</ul>
+
+<br>
+
+<a class="btn btn-outline-secondary btn-lg" href="vitae.html" role="button">Full Vitae</a>
+
+<br>
