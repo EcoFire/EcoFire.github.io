@@ -12,6 +12,19 @@ title: "TALKS"
 </div>
 </article>
 --->
+The long-term goal of my research program is to build a theoretically-founded and actionable understanding of the ways in which biotic and abiotic processes interact with complex spatial arrangements of forest structure to influence long-term pathways of forest development. Most forest dynamics studies use either mean-field (i.e., stand- or area-integrated) or individual-based modelling approaches. My approach is informed by individual-based ecology which states that system properties and dynamics (e.g., composition, diameter distributions, mortality rates) arise from adaptive behaviors of and changes to individuals. This approach has produced paradigmatic shifts in ecology and forestry, and yielded pragmatic solutions to natural resource issues. More narrowly, the objective of my doctoral work is to elucidate the patterns of forest structure and their interaction with fire, the underlying process.
+
+
+Measuring forest structure and complexity
+Pattern recognition is a required task to guide the structuring and resolution for individual-based modelling of systems, because patterns (i.e., non-random data structures), indicate how underlying processes interact with forest structure. Therefore, one arm of my research is to 1) improve methods to accurately and faithfully represent forest structure, and 2) identify statistical and numerical methods which can best detect and describe the spatial complexity of forest structure.
+
+
+Modelling fire in complex forests
+There is a long developmental history of fire behavior prediction tools. The more conventional approaches however are not well equipped to address how the spatial distributions of forest structure and fuels alter the interactions of fuels, the atmosphere, and fire over short to large spatial scales. To examine fire behavior in spatially complex forests, I utilize process-based, also called physics-based, fire modelling software which can resolve the spatiotemporal dynamism of fire behavior.
+
+
+Managing for structural complexity
+
 
 <article>
 <h3><a href="talk-2018-09-ucla-cpl.html">Thoughts and perspectives on PSH from the ground</a></h3>

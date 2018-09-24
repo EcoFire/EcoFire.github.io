@@ -57,7 +57,7 @@ Big trees that are closer to each other might compete more intensely, or they mi
 
 <br>
 
-<a class="btn btn-outline-secondary btn-lg" href="talks.html" role="button">All Talks</a>
+<a class="btn btn-outline-secondary btn-lg" href="research.html" role="button">All Talks</a>
 
 <br>
 <hr>
@@ -69,7 +69,7 @@ Big trees that are closer to each other might compete more intensely, or they mi
 
 <br>
 
-<img id="img-me" src="site_content/img/me.jpeg" width="300px" height="auto">
+<img id="img-me" src="site_content/img/me.jpeg" width="250px" height="auto">
 
 <br>
 
