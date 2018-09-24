@@ -1,5 +1,6 @@
 ---
-title: "TEST  DATA ANALYSIS"
+title: "EcoFire"
+author: "A spatial take on Forest & Fire Ecology"
 output:
   html_document:
     excludes:
@@ -9,7 +10,12 @@ output:
       after_body: footer.html
 ---
 
-> This site is an avenue for me to share either data analysis techniques I find novel or interesting and/or ideas or thoughts from my undergrad background in continental philosophy and French / German literature.  Sometimes I find these two areas of interest to overlap and other times I elect to dedicate a post to just one of my pursuits.
+> Forests are inherently complex ecosystems. If you were to look at a map of trees, understory plants, and the underlying topography, you couldn't help but identify spatial patterns and start to think there must be some reason why you see that pattern and not some other pattern. 
+
+>I study dry forests in the Western US. It is increasingly recognized that trees are not randomly spaced in a forest. In fact, trees tend to display characteristic non-random patterns. This might have a big impact on forest dynamics, in other words how the forest will look in the future. And
+Big trees that are closer to each other might compete more intensely, or they might make a more tight knit canopy, shading and protecting the next generation. In addition, in these forests, it is clear that wildfires historically played a substantial role in shaping and maintaining forest structure. So for me, that begs many questions like: how does grouping alter fire behavior should a wildfire occur?; Should forest managers space out trees to reduce the risk of mortality for individual trees?; Or should managers look to the groupy and non-random historical forests in recognition that historic forests endured frequent fires over centuries?  
+
+>These questions have led me to develop a suite of research questions that investigate spatial patterns in vegetation which arise from anthropogenic or natural processes. Specifically, my doctoral work asks what role wildfire plays in shaping these patterns and how managers can manipulate patterns to modify fire behavior. To answer these questions, I use a variety of tools such as spatial statistics, computational fluid dynamics fire behavior models, and scientific computing software. EcoFire is my platform to discuss the ideas in my research and the computational nitty-gritty with the public and to connect with fellow researchers.
 
 <br>
 <hr>
