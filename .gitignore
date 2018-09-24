@@ -13,3 +13,5 @@ scratch*
 
 # For RMarkdown websites
 _*.*
+
+/ignore
