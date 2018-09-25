@@ -14,15 +14,27 @@ entries will follow this format:
 </article>
 --->
 
+<style>
+.column-left{
+  float: left;
+  width: 50%;
+  text-align: left;
+}
+.column-center{
+  display: inline-block;
+  width: 50%;
+  text-align: left;
+}
+</style>
+
+<div class="column-left">
+<a href="blog-forest-typing-with-stem-maps.html"><img src="site_content/img/blog-forest-typing-with-stem-maps.png" title="ForestTyping" width="300" height="300" /></a> 
+</div>
+<div class="column-right">
 <article>
-<h3><a href="blog-building-site-with-rmarkdown.html">Blog post title</a></h3>
+<h3><a href="blog-forest-typing-with-stem-maps.html">Forest Typing with Stem-maps in R</a></h3>
 <div class="summary">
 <span><i class="fa fa-calendar"></i> _2016-09-01_</span>
-<p>I've got some words here...</p>
-<a class="btn btn-outline-primary btn-sm" href="">Full Post</a>
-</div>
+<p>...what if the ecological relationship of interest occurs at a much finer resolution and one would like to relate within-plot variability of some measure to an overstory-based typology. This post dives into using Spatstat to transform point-based observations to two-dimensional surfaces with categorical values...</p>
 </article>
-
-<hr>
-
-<br>
+</div>

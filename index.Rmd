@@ -38,11 +38,11 @@ Big trees that are closer to each other might compete more intensely, or they mi
 </style>
 
 <div class="column-left">
-<a href="blog-forest-typing-with-stem-maps.html"><img src="site_content/img/blog-forest-typing-with-stem-maps.png" title="Example Image Link" width="450" height="450" /></a> 
+<a href="blog-forest-typing-with-stem-maps.html"><img src="site_content/img/blog-forest-typing-with-stem-maps.png" title="ForestTyping" width="450" height="450" /></a> 
 </div>
 <div class="column-right">
-<a href="blog-forest-typing-with-stem-maps.html"><img src="site_content/img/blog-forest-typing-with-stem-maps.png" title="Example Image Link" width="225" height="225" /></a>  
-<a href="blog-forest-typing-with-stem-maps.html"><img src="site_content/img/blog-forest-typing-with-stem-maps.png" title="Example Image Link" width="225" height="225" /></a></div>
+<a href="blog-forest-typing-with-stem-maps.html"><img src="site_content/img/blog-forest-typing-with-stem-maps.png" title="ForestTyping" width="225" height="225" /></a>  
+<a href="blog-forest-typing-with-stem-maps.html"><img src="site_content/img/blog-forest-typing-with-stem-maps.png" title="ForestTyping" width="225" height="225" /></a></div>
 <a class="btn btn-outline-secondary btn-lg" href="blog.html" role="button">More Posts</a>
 
 <br>
