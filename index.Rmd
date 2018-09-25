@@ -24,17 +24,25 @@ Big trees that are closer to each other might compete more intensely, or they mi
 <a class="anchor" id="blog-posts"></a>
 
 <h1>BLOG</h1>
+<style>
+.column-left{
+  float: left;
+  width: 66%;
+  text-align: center;
+}
+.column-center{
+  display: inline-block;
+  width: 33%;
+  text-align: center;
+}
+</style>
 
-<br>
-
-<article>
-<h3><a href="blog-uptake-fellowship-start.html">This is a blog title</a></h3>
-<div class="summary">
-<p>Here _are_ a bunch of words. This is a [Link](www.link.com), and this is `code`...</p>
-<a class="btn btn-outline-primary btn-sm" href="blog-uptake-fellowship-start.html" role="button">Full Post</a>
+<div class="column-left">
+<a href="blog-forest-typing-with-stem-maps.html"><img src="site_content/img/blog-forest-typing-with-stem-maps.png" title="Example Image Link" width="450" height="450" /></a> 
 </div>
-</article>
-
+<div class="column-right">
+<a href="blog-forest-typing-with-stem-maps.html"><img src="site_content/img/blog-forest-typing-with-stem-maps.png" title="Example Image Link" width="225" height="225" /></a>  
+<a href="blog-forest-typing-with-stem-maps.html"><img src="site_content/img/blog-forest-typing-with-stem-maps.png" title="Example Image Link" width="225" height="225" /></a></div>
 <a class="btn btn-outline-secondary btn-lg" href="blog.html" role="button">More Posts</a>
 
 <br>
