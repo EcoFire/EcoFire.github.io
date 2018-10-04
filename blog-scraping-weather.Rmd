@@ -1,0 +1,124 @@
+---
+title: "Scraping weather data with R"
+author: "Justin Ziegler"
+date: "October 15, 2018"
+output: 
+  html_document:
+    excludes:
+      after_body: footer.html
+    includes:
+      after_body: footer-disqus.html
+---
+
+<br>
+
+>In the past year, the ideal source for historic, real-time, and forecasted weather data migrated from a free API to a subscription service. This source, that shall not be named, strung together different networks of public and prive weather stations, connecting together a dense mesonet. Mesonets are awesome because they allow researchers to knit observations for wall-to-wall, gridded coverage. The agony that this API has been phased out!   
+For me, weather is a key input; many functions in my package, [`firebehavior`](https://github.com/EcoFire/firebehavioR) require weather inputs. The ability to scrape weather from online sources extends my package's capability (not to mention all of the other research fields that draw on meteorology!). So where can one go to for reliable weather data downloads using a simple process? In what may become a series of posts, I will explore exporing various sources to create a patchwork mesonet.  
+
+>In this article, we will dive into a simple-to-get source of weather in the US. I call this simple because there is no API authentication to jump through, just structured data files sitting on html pages waiting to be downloaded. Of course, that convenience comes with downsides which will be discussed.
+
+### Working with RAWS data
+
+RAWS, or remote automated weather stations, are collected on (remote, obviously) stations maintained by state and federal land manager agencies, mostly for real-time monitoring of wildfire hazard. RAWS are data are available from certain sources like MesoWest but, as far as I know, automated scraping or bulk download of real-time data is not permissible. So *that* is a big downside, and a significant one at that. However, backwards looking weather analyses still have significant potential for research, so let's get on with it. 
+
+In this process we will:
+* download the data,
+* examine the metadata,
+* explore the data
+I decided to wite a nice little function that is fairly flexible for queries. In `getRAWS`, you can enter in only the state or county, or you can set a year range, have four coordinates as a bounding box, and also filter by elevation. By default it will create a folder called `/raws` under your working directory.  
+
+```{r, eval=FALSE}
+getRAWS <- function(state=NULL, county=NULL, yearrange=NULL, coords = NULL, elev = NULL,
+                    path = "./raws") {
+  rawsSubset = rawsMetadata
+
+  if (!is.null(state)) {
+    rawsSubset <- rawsSubset[rawsSubset$state == state, ]
+  }
+  if (!is.null(county)) {
+    rawsSubset <- rawsSubset[rawsSubset$county == county, ]
+  }
+  if (!is.null(coords)) {
+    rawsSubset <- rawsSubset[
+      rawsSubset$latdeg >= coords[1] &
+        rawsSubset$latdeg <= coords[2] &
+        rawsSubset$longdeg >= coords[3] &
+        rawsSubset$longdeg <= coords[4],
+    ]
+  }
+  if (!is.null(elev)) {
+    rawsSubset <- rawsSubset[rawsSubset$elev >= elev[1] &
+      rawsSubset$elev <= elev[2], ]
+  }
+
+  print(paste(dim(rawsSubset)[1],'RAWS found. Downloading RAWS data.'))
+
+  dir.create(path, showWarnings = FALSE)
+
+  for (i in 1:dim(rawsSubset)[1]){
+  counter = i
+  url = paste('https://fam.nwcg.gov/fam-web/weatherfirecd/data/',tolower(rawsSubset$state[i]),
+              '/wx',rawsSubset$station[i],'.fw13',sep='')
+  try(download.file(url, paste(path,'/',tolower(rawsSubset$state[i]),
+              '_wx',rawsSubset$station[i],'.fw13',sep='')))
+
+  if (counter %% 10 == 0) print(paste(counter, "annual records attempted to download."))
+  }
+  print(paste(length(list.files(path = path, pattern = ".fw13")),
+              "annual records successfully downloaded. Proceeding to process"))
+  }
+```
+
+If you noticed, this function depends on `rawsMetadata`. Let's take a look at that real quick...
+```{r, message=F, warning=F, results="hide"}
+load('site_content/data/rawsMetadata.rda')
+head(rawsMetadata)
+```
+```{r, echo=F}
+knitr::kable(head(rawsMetadata), format = "html")
+```
+
+First thing that comes to mind is looking at a map of stations.
+```{r, message=F, warning=F, results="hide"}
+library(leaflet)
+library(dplyr)
+```
+```{r}
+leaflet() %>%
+  setView(lng=-105.0844, lat=40.5853, zoom = 5) %>% 
+  addTiles() %>%
+  addCircles(lng=rawsMetadata$longdeg, lat=rawsMetadata$latdeg, popup=rawsMetadata$name, radius = rep(0.1,length(rawsMetadata$name))) 
+```
+
+Maybe in the future I can build in a reactive function to select stations using the map. Until then , let's use `getRAWS` to look at RAWS data from Michigan. A few stations may not download because the URL paths are broken.
+```{r}
+miRAWS = getRAWS(state='MI') #This should find 40 RAWSs
+```
+Naturally, the raw RAWS data are fixed width files and unintelligible. I've written this function to parse out characters into a series of fields.
+```{r{}
+filename = list.files(path = path, pattern = ".fw13",full.names=TRUE)
+
+readRAWS = function(filename,units){
+col.width <- c(3, 6, 8, 4, 1, 1, 3,3,3,3,2,3,3,3,3,2,5,1,2,2,1,1,1,4,3,3,1)
+data = read.fwf(filename[1], col.width)
+if (length(data)>1){
+  for (i in 2:length(data)){
+ data = rbind(data,read.fwf(fileList[i], col.width))
+  }
+}
+names(data) <- c("record.type", "station", "date", "time", "obs.type", "state.wx", "temp", "rh", "wind.dir", "wind.spd", "fuel.moist", "max.temp", "min.temp", "max.rh", "min.rh","precip.dur","precip.amt","wet.flag","herb.green","shrub.green","moist.code","meas.type","season","solar.rad","gust.dir","gust.spd","snow.flag")
+data$station = as.character(data$station)
+merge(data.table(data),data.table(rawsMetadata))
+return(data)
+}
+  
+
+
+```
+
+<hr>
+What do you think? Can this approach be useful for categorizing intra-plot variation in your research? I'd like to hear your thoughts on using point-based spatial locations of trees, or any other discrete spatial events for that matter, to create raster images. 
+
+[^1]: **Ziegler, J.P.**, Hoffman, C., Battaglia, M. and Mell, W., 2017. Spatially explicit measurements of forest structure and fire behavior following restoration treatments in dry forests. Forest Ecology and Management, 386, pp.1-12. 
+[^2]: Here, creation of spatstat will warn you that many points have duplicate locations. That's okay for this analysis. 
+[^3]: In general, smoothing alone is best left for when maps of points don't display strong gradience over the study area 

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Justin Ziegler" />
+
+<meta name="date" content="2018-10-15" />
+
+<title>Constructing stem-maps in R</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 45px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+
+.section h2 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h3 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h4 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h5 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h6 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<!-- favicon -->
+<link rel="icon" type="img/png" href="site_content/img/rbmv_fav.png" />
+
+<!-- fonts -->
+<!-- <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto+Mono:100i,300,700,700i|Roboto:100,100i,300,300i" rel="stylesheet">
+-->
+<!-- navbar -->
+<div class="navbar navbar-default  navbar-fixed-top no-print" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">
+        <img alt="Brand" src="site_content/img/rbmv_curve.png" id="rbmv">
+      </a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html" onclick="fadeInOut()">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="blog.html" onclick="fadeInOut()">
+    <span class="fa fa-pencil-square-o"></span>
+     
+    Blog
+  </a>
+</li>
+<li>
+  <a href="research.html" onclick="fadeInOut()">
+    <span class="fa fa-newspaper-o"></span>
+     
+    Research
+  </a>
+</li>
+<li>
+  <a href="index.html#about" onclick="fadeInOut()">
+    <span class="fa fa-user-circle-o"></span>
+     
+    About
+  </a>
+</li>
+<li>
+  <a href="mailto:Justin.Ziegler@Colostate.edu">
+    <span class="fa fa-send-o"></span>
+     
+    Connect
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Constructing stem-maps in R</h1>
+<h4 class="author"><em>Justin Ziegler</em></h4>
+<h4 class="date"><em>October 15, 2018</em></h4>
+
+</div>
+
+
+<p><br></p>
+<blockquote>
+<p>I’m currently working on an package that compiles existing stem-maps from prior studies. I want to encourage other researchers to collaborate and share their datasets. Of course, the best way to ask for stem-maps is to first provide a way for researchers to construct stem-maps. This blog post describes how to derive a set of (X,Y) coordinates in Cartesian space using azimuth-distance obsevations.</p>
+</blockquote>
+<div id="a-brief-explanation-of-stem-mapping" class="section level3">
+<h3>A brief explanation of stem-mapping</h3>
+<p>While reduced technology continues to advance and GIS skills are now commonplace in any research group, sometimes the cost and complexity of dealing with high-precision GPS units (plus any time spent processing raw geospatial data) is overkill. Often, researchers just want to know how far every observation (trees in this example) is from every other observation (note: a map of spatial positions of trees is called a stem-map). Now there are many ways of accomplishing this task. The simplest is to call some point in space the origin (by convention it is the southwestern most point in your plot) and assume that the plot can be described in terms of Cartesian space (Cartesian coordinates are generally of two or three dimensions and dimensions share the same unit distance).</p>
+<p>There are three common methods for stem-mapping in the field:</p>
+<ol style="list-style-type: decimal">
+<li>Direct stem-mapping<br />
+In the first, a bounding box is installed to delimit an plot; that is, the corners of the plot are identified To map trees within the plot, two measures are taken: the X coordinate and the Y coordinate. The picture below illustrates. First, the azimuth from Point A to Point B, along the X axis, is used as a baseline. Then the observer moves along the X axis, measuring the azimuth from the the observer’s location (1) until the observer finds the distance along the X axis where the azimuth to the tree is perpindicular to the baseline (2). That distance along the X axis is recorded as the tree’s X coordinate. The observer can either measure the distance from the X axis to the tree to estmate Y or the observed can repeat the same process along the Y axis to find the Y coordinate of the tree. The advantage of this method is that no further transformation of observations is needed; the (X,Y) of the tree is known. The disadvantages are that it can be tediously slow, as it also requires that the plot edges must be marked with measuring tape, and there is a potential for obstructed views. If views are obstructed, the observer can move to another boundary. Another disadvantage is that the lengths along axes must be corrected for slope in order to reveal horizontal distance. This isn’t problematic for sloped planes, but real-world topography is undulating. In general I would not recommend this method because of slope and time issues. Because this method yields (X,Y) coordinations, I won’t show examples in R.<br />
+<img src="site_content/img/blog_stem_mapping_1.gif" alt="Alt Text" /></li>
+</ol>
+<p><br> 2. Fixed-reference stem-mapping<br />
+In this method, a reference point is chosen within the plot. By convention it is the southwest, often the lower left corner. Here the X-axis can also be the baseline. The azimuth from the reference point to the tree and distance from the reference point to the tree is measured. The figure below describes the process. Note that the azimuth <em>from</em> a source to the target <em>to</em> be mapped is called the foresight line. By convention, I use foresight line azimuths but it’s worth noting that some people measure backsight and some measure both (one can average the foresight angle and 360 minus the foresight angle to reduce measurement error).<br />
+<img src="site_content/img/blog_stem_mapping_2.gif" alt="Alt Text" /> <br> Using fixed-reference stem-mapping in this manner also requires identifying corners of a plot but no measuring tapes need to be laid out. Another disadvantage is that, because one measures angle from the same fixed point, if there are nearby obstructions, almost every tree is going to be obstructed. There is another approach that can speed-up the process of establishing a plot while reducing the likelihood of obstructions: the reference point can be placed in the middle of the plot. And, if the reference point’s coordinates are known with respect to an origin, an additional offset can be applied after tree coordinates are calculated (I will demonstrate this later). There are additional advantages to using a central reference point: corners of the plot do not need to be identified; therefore, the plot can take on any shape (or have no clear delineation at all).<br />
+<br> 3. Sequential-reference stem-mapping<br />
+The last method starts with a reference point, measures the azimuth and distance to a target tree. The reference point often is a tree. In this example, we’ll call the original reference tree A and the first target tree B. So the original azimuth-distance observation describes A-&gt;B. Then, the azimuth and distance to the next tree, C, is measured from B. Then, from C to D, the azimuth and distance is measured, and so on. This method is great because there is very little chance of obstruction between nearby trees as the distances will be small. In addition, there is no need to establish plot corners unless desired and the plot can take on whatever shape desired, if it has any shape at all. This method can also be made to fit within a delineated plot. After converting azimuth and distance observations to (X,Y) coordinates, one could offset all coordinates by the (X,Y) of the initial reference tree.<br />
+<img src="site_content/img/blog_stem_mapping_3.gif" alt="Alt Text" /></p>
+</div>
+<div id="fixed-reference-stem-mapping" class="section level3">
+<h3>Fixed-reference stem-mapping</h3>
+<div id="from-a-corner" class="section level4">
+<h4>From a corner</h4>
+<p>I’ll demonstrate the methods and the calculations to convert azimuth-distance observations to (X,Y) coordinates starting with fixed-reference stem-mapping. Here <code>obs</code> includes the identity of trees, <code>treeNum</code>, <code>HD</code> is the horizontal distance from the reference point, and <code>AZ</code> is the azimuth from the reference point. The scenario here is that we are standing at (0,0), the plot is 70 m X 70 m, and we are measuring distance and azimuth from the origin to each tree. We will write a function to get our (X,Y) coordinates. Don’t dwell on the geometry but <em>it is important to recognize</em> that the specific equations we use depend whether the tree is in a northeast, southeast, southwest, or northwest quadrant from where we stand. Another thing to remember is that these trigonometric operators expect azimuth in radians whereas we almost always are measuring in degrees. So, if you see odd constants, they reference <span class="math inline">\(angle*\pi/180 = radians\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs =<span class="st"> </span><span class="kw">data.frame</span>(
+<span class="dt">treeNum =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">15</span>),
+<span class="dt">HD =</span> <span class="kw">c</span>(<span class="fl">70.1</span>, <span class="fl">61.9</span>, <span class="fl">55.9</span>, <span class="fl">54.0</span>, <span class="fl">48.0</span>, <span class="fl">46.4</span>, <span class="fl">43.2</span>, <span class="fl">43.0</span>, <span class="fl">56.2</span>, <span class="fl">49.2</span>, <span class="fl">52.2</span>, <span class="fl">42.2</span>, <span class="fl">42.6</span>, <span class="fl">36.8</span>, <span class="fl">36.9</span>), 
+<span class="dt">AZ =</span> <span class="kw">c</span>(<span class="fl">349.7</span>, <span class="fl">352.1</span>, <span class="fl">346.3</span>, <span class="fl">344.4</span>, <span class="fl">355.9</span>, <span class="fl">339.1</span>, <span class="fl">331.3</span>, <span class="fl">330.7</span>, <span class="fl">327.8</span>, <span class="fl">304.0</span>, <span class="fl">301.1</span>, <span class="fl">307.0</span>, <span class="fl">308.8</span>, <span class="fl">322.5</span>, <span class="fl">325.2</span>))
+
+map.fixedRef =<span class="st"> </span><span class="cf">function</span>(HD, AZ, <span class="dt">refX =</span> <span class="dv">0</span>, <span class="dt">refY =</span> <span class="dv">0</span>) {
+    theta =<span class="st"> </span>(<span class="dv">360</span> <span class="op">-</span><span class="st"> </span>AZ)
+    thetarad =<span class="st"> </span>theta <span class="op">*</span><span class="st"> </span>pi<span class="op">/</span><span class="dv">180</span>
+    x =<span class="st"> </span><span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">270</span>, HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(<span class="fl">6.283185</span> <span class="op">-</span><span class="st"> </span>thetarad),
+        <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">180</span>, <span class="op">-</span>HD <span class="op">*</span><span class="kw">cos</span>(thetarad <span class="op">-</span><span class="st"> </span><span class="fl">3.141593</span>),
+        <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(<span class="fl">3.141593</span> <span class="op">-</span><span class="st"> </span>thetarad),
+        HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(thetarad))))
+    y =<span class="st"> </span><span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">270</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(<span class="fl">6.283185</span> <span class="op">-</span><span class="st"> </span>thetarad),
+        <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">180</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(thetarad <span class="op">-</span><span class="st"> </span><span class="fl">3.141593</span>),
+        <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(<span class="fl">3.141593</span> <span class="op">-</span><span class="st"> </span>thetarad),
+        HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(thetarad))))
+    x =<span class="st"> </span>x <span class="op">+</span><span class="st"> </span>refX
+    y =<span class="st"> </span>y <span class="op">+</span><span class="st"> </span>refY
+    <span class="kw">return</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y))
+}
+XY =<span class="st"> </span><span class="kw">map.fixedRef</span>(obs<span class="op">$</span>HD,obs<span class="op">$</span>AZ)
+<span class="kw">plot</span>(XY,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>))
+<span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">70</span>,<span class="dv">70</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-1-1.png" width="672" /> <br></p>
+</div>
+<div id="from-the-center" class="section level4">
+<h4>From the center</h4>
+<p>Had our reference point been in the center of the plot we would have observed different horizontal distances and azimuthes. Let’s change those and then re-calculate (X,Y).</p>
+<div id="azimuth-and-distance-from-and-to-any-arbitrary-locations" class="section level5">
+<h5>Azimuth and distance from and to any arbitrary locations</h5>
+<p>We need to take a quick detour because I don’t have the data for you. Before we can move on, I need to figure out what the horizontal distances and azimuths are from the center. We need two pieces of information: the geographic center, which is the mean of the minima and maxima X and Y; and the difference in coordinate space between trees and the center. Again, there is some trig here that I won’t dive into.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">centerX =<span class="st"> </span>(<span class="kw">min</span>(XY<span class="op">$</span>x) <span class="op">+</span><span class="st"> </span><span class="kw">max</span>(XY<span class="op">$</span>x))<span class="op">/</span><span class="dv">2</span>
+centerY =<span class="st"> </span>(<span class="kw">min</span>(XY<span class="op">$</span>y) <span class="op">+</span><span class="st"> </span><span class="kw">max</span>(XY<span class="op">$</span>y))<span class="op">/</span><span class="dv">2</span>
+xdiff =<span class="st"> </span>centerX<span class="op">-</span>XY<span class="op">$</span>x  
+ydiff =<span class="st"> </span>centerY<span class="op">-</span>XY<span class="op">$</span>y
+
+obs<span class="op">$</span>HDcenter =<span class="st"> </span><span class="kw">sqrt</span>((XY<span class="op">$</span>x<span class="op">-</span>centerX)<span class="op">^</span><span class="dv">2</span><span class="op">+</span>(XY<span class="op">$</span>y<span class="op">-</span>centerY)<span class="op">^</span><span class="dv">2</span>)
+obs<span class="op">$</span>AZcenter =<span class="st"> </span><span class="op">-</span><span class="dv">180</span><span class="op">+</span>(<span class="kw">ifelse</span>(xdiff<span class="op">&gt;</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&lt;</span><span class="dv">0</span>, <span class="kw">abs</span>(<span class="kw">atan</span>(ydiff<span class="op">/</span>xdiff)), 
+     <span class="kw">ifelse</span>(xdiff<span class="op">&lt;</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&lt;</span><span class="dv">0</span>, pi<span class="op">-</span><span class="kw">abs</span>(<span class="kw">atan</span>(ydiff<span class="op">/</span>xdiff)), 
+     <span class="kw">ifelse</span>(xdiff<span class="op">&lt;</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&gt;=</span><span class="dv">0</span>, pi<span class="op">+</span><span class="kw">abs</span>(<span class="kw">atan</span>(ydiff<span class="op">/</span>xdiff)), 
+     <span class="kw">ifelse</span>(xdiff<span class="op">&gt;</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&gt;=</span><span class="dv">0</span>, <span class="dv">2</span><span class="op">*</span>pi<span class="op">-</span><span class="kw">abs</span>(<span class="kw">atan</span>(ydiff<span class="op">/</span>xdiff)), 
+     <span class="kw">ifelse</span>(xdiff<span class="op">==</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&gt;</span><span class="dv">0</span>, <span class="fl">1.5</span><span class="op">*</span>pi, 
+     <span class="kw">ifelse</span>(xdiff<span class="op">==</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&lt;</span><span class="dv">0</span>, .<span class="dv">5</span><span class="op">*</span>pi, <span class="dv">0</span> )))))))<span class="op">*</span><span class="dv">180</span><span class="op">/</span>pi</code></pre></div>
+</div>
+<div id="back-to-your-regularly-scheduled-programming" class="section level5">
+<h5>Back to your regularly scheduled programming</h5>
+<p>Now we can take the vectors of horizontal distance-azimuth relative to the center and plug them into our function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">map.fixedRef</span>(obs<span class="op">$</span>HDcenter,obs<span class="op">$</span>AZcenter),<span class="dt">pch=</span><span class="dv">19</span>)</code></pre></div>
+<p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Perfect. It is entirely acceptable to have a (0,0) centered stem-map. Though if you recall, it may be that one knows the center’s coordinates in relation to a plot corner. In our case, that is ( 47.18 , 24.06 ). So we can shift all the points back in line to our plot corner. If we did our job this plot should match the first one.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">map.fixedRef</span>(obs<span class="op">$</span>HDcenter,obs<span class="op">$</span>AZcenter, centerX,centerY),<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>))
+<span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">70</span>,<span class="dv">70</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+</div>
+<div id="going-further" class="section level4">
+<h4>Going further</h4>
+<p>Some stem-maps are huge. For example, I was able to help out with mapping the &gt;17 ha <a href="https://sites.warnercnr.colostate.edu/pfdp/">Pike Forest Dynamics Plot</a>. In this case, the plot had to be subdivided into a grid of subplots. For each subplot, a corner can become the reference point for subsets of trees. I’ll explain… Let’s say we have a 210 m x 70 m plot that is divided into three subplots of equal area; that’s 3x the size of the imaginary plot with have been working with. For this example, we will pretend we are in the middle subplot, thus our reference point is (70,0).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">subplot =<span class="st"> </span><span class="kw">map.fixedRef</span>(obs<span class="op">$</span>HD,obs<span class="op">$</span>AZ, <span class="dt">refX=</span><span class="dv">70</span>,<span class="dt">refY=</span><span class="dv">0</span>)
+
+<span class="kw">plot</span>(subplot,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">215</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>))
+<span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">70</span>,<span class="dv">70</span>,<span class="dt">lwd=</span><span class="dv">2</span>)
+<span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">140</span>,<span class="dv">70</span>,<span class="dt">lwd=</span><span class="dv">2</span>)
+<span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">210</span>,<span class="dv">70</span>,<span class="dt">lwd=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+</div>
+<div id="sequential-reference-stem-mapping" class="section level3">
+<h3>Sequential-reference stem-mapping</h3>
+<p>I have no real-world experience with sequential stem-mapping but it looks much easier to do in the field. It’s best to imagine a chain of linked trees where we hop from one to the next during our measurements. <code>treeorigintarget</code> describes the pair of reference and target tree identities, <code>HD</code> is the horizontal distance between the trees, and <code>AZ</code> is azimuth from the reference tree to the target tree.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs =<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">treeorigintarget =</span> <span class="kw">c</span>(<span class="st">&quot;(1-2)&quot;</span>, <span class="st">&quot;(2-3)&quot;</span>, <span class="st">&quot;(3-4)&quot;</span>, <span class="st">&quot;(4-5)&quot;</span>, <span class="st">&quot;(5-6)&quot;</span>, <span class="st">&quot;(6-7)&quot;</span>, <span class="st">&quot;(7-8)&quot;</span>, <span class="st">&quot;(8-9)&quot;</span>, <span class="st">&quot;(9-10)&quot;</span>, <span class="st">&quot;(10-11)&quot;</span>, <span class="st">&quot;(11-12)&quot;</span>, <span class="st">&quot;(12-13)&quot;</span>, <span class="st">&quot;(13-14)&quot;</span>, <span class="st">&quot;(14-15)&quot;</span>),
+  <span class="dt">HD =</span> <span class="kw">c</span>(<span class="fl">8.6</span>, <span class="fl">8.5</span>, <span class="fl">2.6</span>, <span class="fl">11.9</span>, <span class="fl">13.8</span>, <span class="fl">6.9</span>, <span class="fl">0.4</span>, <span class="fl">13.4</span>, <span class="fl">22.8</span>, <span class="fl">3.9</span>, <span class="fl">11.1</span>, <span class="fl">1.4</span>, <span class="fl">11.1</span>, <span class="fl">1.8</span>),
+  <span class="dt">AZ =</span> <span class="kw">c</span>(<span class="fl">152.1</span>, <span class="fl">213.1</span>, <span class="fl">210.8</span>, <span class="fl">110.5</span>, <span class="fl">251.1</span>, <span class="fl">217.4</span>, <span class="fl">228.1</span>, <span class="fl">318.2</span>, <span class="fl">208.7</span>, <span class="fl">261.8</span>, <span class="fl">97.8</span>, <span class="fl">22.7</span>, <span class="fl">77.5</span>, <span class="fl">49.3</span>)
+)</code></pre></div>
+<p>The function here will do the hard work. It is similar to our prior function except there is an intermediate step. First we calculate the (X,Y) of the target tree in relation to the reference tree. Once we do that, we assume the initial reference tree is the origin and then sequentially sum up the relative (X,Y)’s to determine an absolute (X,Y) of all trees in relation to the initial reference tree.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map.sequenceRef =<span class="st"> </span><span class="cf">function</span>(HD, AZ, <span class="dt">iniX =</span> <span class="dv">0</span>, <span class="dt">iniY =</span> <span class="dv">0</span>) {
+    theta =<span class="st"> </span><span class="dv">360</span> <span class="op">-</span><span class="st"> </span>AZ
+    thetarad =<span class="st"> </span>theta <span class="op">*</span><span class="st"> </span>pi<span class="op">/</span><span class="dv">180</span>
+    relative.x =<span class="st"> </span><span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">270</span>, HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(<span class="fl">6.283185</span> <span class="op">-</span><span class="st"> </span>thetarad),
+                 <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">180</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(thetarad <span class="op">-</span><span class="st"> </span><span class="fl">3.141593</span>),
+                 <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(<span class="fl">3.141593</span> <span class="op">-</span><span class="st"> </span>thetarad),
+                 HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(thetarad))))
+    relative.y =<span class="st"> </span><span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">270</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(<span class="fl">6.283185</span> <span class="op">-</span><span class="st"> </span>thetarad),
+                 <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="dv">180</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(thetarad <span class="op">-</span><span class="st"> </span><span class="fl">3.141593</span>),
+                 <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(<span class="fl">3.141593</span> <span class="op">-</span><span class="st"> </span>thetarad),
+                 HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(thetarad))))
+    x =<span class="st"> </span><span class="kw">rep</span>(iniX, <span class="kw">length</span>(relative.x) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)
+    y =<span class="st"> </span><span class="kw">rep</span>(iniY, <span class="kw">length</span>(relative.y) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)
+
+    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>(<span class="kw">length</span>(x))) {
+        x[i] =<span class="st"> </span>x[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>relative.x[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]
+        y[i] =<span class="st"> </span>y[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>relative.y[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]
+    }
+    <span class="kw">return</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y))
+}
+
+XY =<span class="st"> </span><span class="kw">map.sequenceRef</span>(obs<span class="op">$</span>HD,obs<span class="op">$</span>AZ)
+<span class="kw">plot</span>(XY,<span class="dt">pch=</span><span class="dv">19</span>)</code></pre></div>
+<p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Again, it is possible to shift (X,Y) coordinates if we are trying to tie coordinates into a plot. We can do this if we know the (X,Y) of our initial reference tree.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">XY =<span class="st"> </span><span class="kw">map.sequenceRef</span>(obs<span class="op">$</span>HD, obs<span class="op">$</span>AZ, <span class="dt">iniX =</span> <span class="fl">68.97</span>, <span class="dt">iniY =</span> <span class="fl">12.53</span>)
+<span class="kw">plot</span>(XY,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>))
+<span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">70</span>,<span class="dv">70</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="conclusion" class="section level3">
+<h3>Conclusion</h3>
+<p>So there you have it. Now that you have walked through these steps you should be able to go out into the field and use your trusty compass and a laser rangefinder to grab distances and azimuths from any reference point trusting that you can convert these to (X,Y) coordinates. <br></p>
+</div>
+
+  </div> <!-- articleBandContent -->
+</div> <!-- pageContent -->
+
+<footer class="no-print">
+  <div id="rbmvFooter" class="footer">
+    <div class="footerContent">
+    
+      <!-- column 1 -->
+      <div class="col-md-4">
+        <p><i class="fa fa-send fa-lg"></i> Connect with me<br>
+        <a href="mailto:Justin.Zieger@Colostate.edu">Justin.Zieger@Colostate.edu</a>
+        <br>
+        <br>
+      </div>
+
+      <!-- column 2 -->
+      <div class="col-md-4">
+        <a href="https://github.com/EcoFire">
+          <i class="fa fa-github fa-lg"></i> EcoFire GitHub</a>
+        <a href="https://www.linkedin.com/in/justin-p-ziegler-b5230466/">
+          <br>
+          <i class="fa fa-linkedin fa-lg"></i> My LinkedIn</a>
+		<a href="https://github.com/EcoFire">
+		<br>
+          <i class="fas fa-graduation-cap"></i> My Google Scholar</a>
+        <br>
+        <br>
+      </div>
+
+      <!-- column 3 -->
+      <div class="col-md-4">
+        <p class="text">I am a research associate and doctoral student studying spatial forest and fire dynamics. EcoFire is my platform to discuss ideas and methods behind the science. Thanks for visiting!</p>
+        <br>
+        <br>
+      </div>
+      <div class="top">
+        <p class="pull-right">
+          <a id="scrollTop" class="slowly" onclick="slowScrollTop()" href=#>
+            <i class="fa fa-angle-double-up"></i> Back to top
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- slow scrollTop function -->
+  <script type="text/javascript">
+    function slowScrollTop() { 
+      $('body').animate({ scrollTop: 0 }, 'slow'); 
+    } 
+  </script>
+  
+  <!-- page transition -->
+  <script type="text/javascript">
+    // fade content and not navbar in and out
+    $(document).ready(function fadeInOut() {
+      var non_navbar = $('.fluid-row,.section.level2,.summary,p,acrticle,h3,footer')
+      non_navbar.css('display', 'none');
+      non_navbar.fadeIn(800);
+    
+      $('.navbar-link').click(function(event) {
+        event.preventDefault();
+        newLocation = this.href;
+      
+        non_navbar.fadeOut('slow', newpage);
+      });
+    
+      function newpage() {
+        window.location = newLocation;
+      }
+    });
+  </script>
+  
+  <!-- google analytics -->
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-83611715-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+  
+</footer>
+
+<!-- disqus -->
+<script id="dsq-count-scr" src="//rbmv.disqus.com/count.js" async></script>
+<div id="disqus_thread" class="disqusPadding"></div>
+  <script>
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = '//ecofire.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
