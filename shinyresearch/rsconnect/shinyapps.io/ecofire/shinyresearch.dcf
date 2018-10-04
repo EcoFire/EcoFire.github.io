@@ -5,6 +5,8 @@ account: ecofire
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 489729
-bundleId: 1621926
+bundleId: 1622038
 url: https://ecofire.shinyapps.io/shinyresearch/
-when: 1538628168.92097
+when: 1538635820.22975
+asMultiple: FALSE
+asStatic: FALSE

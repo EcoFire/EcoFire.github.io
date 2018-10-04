@@ -1,23 +1,35 @@
+#server
 library(shiny)
-library(datasets)
-# Global variables can go here
-n <- 200
+library(dplyr)
+library(kableExtra)
+biblio = (data.table::fread('biblio.txt',header=T))
+#kable(dt) %>%
+#  kable_styling(bootstrap_options = c("striped", "hover"))
+Sys.setlocale('LC_ALL','C') 
 
-
-# Define the UI
-ui <- bootstrapPage(
-   selectInput("researchdata", "Choose a topic:", 
-                choices = c("fire behavior", "fire ecology", "spatial forest structure", "forest management", "forest dynamics"))
-  )
-
-
-
-# Define the server code
-server <- function(input, output) {
-  output$plot <- renderPlot({
-    hist(runif(input$n))
+shinyServer(function(input,output){
+  df_subset <- reactive({
+    a <- biblio[grepl(input$tag,biblio$tags,useBytes = TRUE),] 
+          b=data.table::data.table()
+    for (i in 1:dim(a)[1]){
+      btitle= a$Title[i]
+      babstract= a$Abstract[i]
+      bcitation= a$Citation[i]
+      burl= a$URL[i]
+      b = rbind(b,btitle,babstract, bcitation, burl, "")
+    }
+    return(b)
   })
-}
 
-# Return a Shiny app object
-shinyApp(ui = ui, server = server)
+#  output$table <- 
+#   renderTable(df_subset())
+     #Note how df_subset() was used and not df_subset
+ output$table <- function() {
+     df_subset() %>%
+       knitr::kable("html",col.names='') %>%
+       kable_styling("striped", full_width = F) %>%
+      row_spec(seq(1,dim(df_subset())[1],5), bold = T)
+   }
+
+
+})
