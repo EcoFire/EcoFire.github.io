@@ -26,9 +26,9 @@ Big trees that are closer to each other might compete more intensely, or they mi
 
 <h1>BLOG</h1>
 <p>
-<img src="site_content/img/blog-making-stem-maps.png" style="height:250px;"/>
-<img src="site_content/img/blog-forest-typing-with-stem-maps.png" style="height:250px;"/>
-<img src="site_content/img/blog-making-stem-maps.png" style="float:rightt;height:250px;"/>
+[<img src="site_content/img/blog-making-stem-maps.png" style="height:250px;">](blog-stem-mapping.html)
+[<img src="site_content/img/blog-forest-typing-with-stem-maps.png" style="height:250px;">](blog-forest-typing-with-stem-maps.html)
+[<img src="site_content/img/blog-making-stem-maps.png" style="height:250px;">]()
 </p>
 <!-- <a class="btn btn-outline-secondary btn-lg" href="blog.html" role="button">More Posts</a> --> 
 
@@ -41,7 +41,7 @@ Big trees that are closer to each other might compete more intensely, or they mi
 
 <h1>RESEARCH</h1>
 
-<iframe src="https://ecofire.shinyapps.io/shinyresearch/" style="border: none; width: 900px; height: 1000px"></iframe>
+<iframe onload="resizeIframe(this)" src="https://ecofire.shinyapps.io/shinyresearch/" style="border: none; width: 900px; height: 1000px; display:block;"></iframe>
 
 
 <br>
