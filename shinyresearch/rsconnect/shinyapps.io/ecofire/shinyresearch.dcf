@@ -1,0 +1,10 @@
+name: shinyresearch
+title:
+username:
+account: ecofire
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 489729
+bundleId: 1621926
+url: https://ecofire.shinyapps.io/shinyresearch/
+when: 1538628168.92097
