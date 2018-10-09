@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Justin Ziegler" />
+
+<meta name="date" content="2018-10-15" />
+
+<title>Exploratory Analysis of Point Patterns</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 45px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+
+.section h2 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h3 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h4 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h5 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h6 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<!-- favicon -->
+<link rel="icon" type="img/png" href="site_content/img/rbmv_fav.png" />
+
+<!-- fonts -->
+<!-- <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto+Mono:100i,300,700,700i|Roboto:100,100i,300,300i" rel="stylesheet">
+-->
+<!-- navbar -->
+<div class="navbar navbar-default  navbar-fixed-top no-print" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html" onclick="fadeInOut()">
+    <span class="fa fa-home"></span>
+     
+    as.numeric(ecology)
+  </a>
+</li>
+<!--<li>
+  <a href="blog.html" onclick="fadeInOut()">
+    <span class="fa fa-pencil-square-o"></span>
+     
+    Blog
+  </a>
+</li>
+<li>
+  <a href="research.html" onclick="fadeInOut()">
+    <span class="fa fa-newspaper-o"></span>
+     
+    Research
+  </a>
+</li>
+<li>
+  <a href="index.html#about" onclick="fadeInOut()">
+    <span class="fa fa-user-circle-o"></span>
+     
+    About
+  </a>
+</li>-->
+<li>
+  <a href="mailto:Justin.Ziegler@Colostate.edu">
+    <span class="fa fa-send-o"></span>
+     
+    Connect
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Exploratory Analysis of Point Patterns</h1>
+<h4 class="author"><em>Justin Ziegler</em></h4>
+<h4 class="date"><em>October 15, 2018</em></h4>
+
+</div>
+
+
+<p><br></p>
+<blockquote>
+<p>I’m going to continue on with the theme from the prior two blog posts and talk about stem-maps. In the application of point pattern analysis, and spatial statistics more broadly, the end goal is most often description (most often, even inferential methods aim to <em>just</em> test for non-randomness). In this post I will present a couple of, in my opinion, aesthetically attractive and information rich visualizations of exploratory analyses.</p>
+</blockquote>
+<div id="the-basics-of-stem-maps" class="section level2">
+<h2>The basics of stem-maps</h2>
+<p>We’ll start simple and plot a stem-map. A stem-map is a scatterplot of vegetation locations in a Cartesian coordinate system. In research methods that perform point pattern analyses, this plot usually serves as the first demonstration of the data.</p>
+<p>What information is plotted here:<br />
+- Locations of trees<br />
+- Size of trees (specifically diameter at breast height, not to scale)<br />
+- Number of trees</p>
+<p>There is some second order information that can be gleaned here. First, a viewer will start to look for patterns in the relative positioning of trees, ‘Are they groupy, are they overdispersed?’. Next a viewer will look at how the spatial patterns vary with trees size, ‘Do trees of different sizes have different patterns? How do trees of different sizes relate to each other spatially?’. These exploratory plots are excellent for hypothesis generation.</p>
+<p>Here is the code to produce such a plot. We will use the same data from Ziegler et al. (2017)<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> that we explored <a href="blog-forest-typing-with-stem-maps.html">in a prior post</a>. This plot has locations of trees observed before and after a cutting.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">trees &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;site_content/data/redfeather.txt&quot;</span>, <span class="dt">header =</span> T)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">precutting_stemmap &lt;-<span class="st"> </span><span class="kw">with</span>(trees, <span class="kw">plot</span>(x_m, y_m, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">cex =</span> dbh_cm<span class="op">/</span><span class="dv">40</span>, </a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="dt">yaxs =</span> <span class="st">&quot;i&quot;</span>, <span class="dt">xaxs =</span> <span class="st">&quot;i&quot;</span>, <span class="dt">sub =</span> <span class="st">&quot;Before Cutting&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;X Coordinate</span><span class="ch">\n</span><span class="st">&quot;</span>, </a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="dt">ylab =</span> <span class="st">&quot;Y coordinate&quot;</span>))</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">postcutting_stemmap &lt;-<span class="st"> </span><span class="kw">with</span>(trees[trees<span class="op">$</span>type <span class="op">==</span><span class="st"> &quot;Tree&quot;</span>, ], <span class="kw">plot</span>(x_m, </a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">    y_m, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">cex =</span> dbh_cm<span class="op">/</span><span class="dv">40</span>, <span class="dt">yaxs =</span> <span class="st">&quot;i&quot;</span>, <span class="dt">xaxs =</span> <span class="st">&quot;i&quot;</span>, <span class="dt">sub =</span> <span class="st">&quot;After Cutting&quot;</span>, </a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">    <span class="dt">xlab =</span> <span class="st">&quot;X Coordinate</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">yaxt =</span> <span class="st">&quot;n&quot;</span>))</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw">axis</span>(<span class="dt">side =</span> <span class="dv">2</span>, <span class="dt">labels =</span> F)</a></code></pre></div>
+<p><img src="blog-spatstat-for-exploration_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /> <br> That looks pretty good to me. It’s actually not far from publication-quality.</p>
+<div id="adding-categorical-information" class="section level3">
+<h3>Adding categorical information</h3>
+<p>Thus far we have plotted (X,Y) coordinates with sizes scaled by a continuous attribute. Like any scatter plot we could continue modifying the plot to add information. For example, we could assign a shape to represent each tree’s species and/or use a color gradient for an additional ordinal or continuous attribute. In this case we will plot the cut trees (stumps) together with the residual trees (tree). The plot we’re making here comes from Ziegler et al. (2017). <em>Hey, we’re almost, kind of, doing scientific replication!</em></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">ggplot</span>(trees, <span class="kw">aes</span>(x_m, y_m, <span class="dt">color =</span> type, <span class="dt">size =</span> dbh_cm)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">    </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="kw">coord_equal</span>() <span class="op">+</span><span class="st"> </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;grey&quot;</span>, </a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="st">&quot;black&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">scale_size</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="kw">min</span>(trees<span class="op">$</span>dbh_cm<span class="op">/</span><span class="dv">25</span>), <span class="kw">max</span>(trees<span class="op">$</span>dbh_cm<span class="op">/</span><span class="dv">25</span>)))</a></code></pre></div>
+<p><img src="blog-spatstat-for-exploration_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="plotting-even-more-information" class="section level3">
+<h3>Plotting even more information</h3>
+<p>We’ll now add on species. Now there are many ways we can add this into our current plot, but my general rule of thumb is to reasonably limit the pieces of information should be in a single plot. Too much and your audience won’t know what they should pay attention to.<br />
+There is a rank order of information that we want to convey. In our plotting we have implied that (X,Y) comes first because they get the axes, then type (stump or tree) because our colors provide significant visual contrast, and last size. Now we will add a panel which physically divides the spaces occupied by our species. Species becomes the least important variable because a viewer must now make contrasts <em>across</em> plots to identify differences by species.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">ggplot</span>(trees, <span class="kw">aes</span>(x_m, y_m, <span class="dt">color =</span> type, <span class="dt">size =</span> dbh_cm)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">    </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;grey&quot;</span>, </a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="st">&quot;black&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">scale_size</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="kw">min</span>(trees<span class="op">$</span>dbh_cm<span class="op">/</span><span class="dv">25</span>), <span class="kw">max</span>(trees<span class="op">$</span>dbh_cm<span class="op">/</span><span class="dv">25</span>))) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span>species)</a></code></pre></div>
+<p><img src="blog-spatstat-for-exploration_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" /> <br> In this case, adding species contributed to our interpretation of these data; specifically, there are some interesting <em>within</em>-species patterns. So the rank order of information importance that we imposed seemed to have been a good decision. One barely needs to examine the legend in order to interpret the plot. Of course, we can’t know if there are other interesting trends unless we visualize the data according to some other rank order, so it’s always a good way to change up how we visualize each factor.</p>
+</div>
+</div>
+<div id="plotting-first-order-spatial-information" class="section level2">
+<h2>Plotting first-order spatial information</h2>
+<p>In point pattern analyses, we can describe first- and second-order properties. First-order properties arise from the density of points and second-order properties arise from the interaction of points (and are generally normalized by global, regional or local densities). Here we will focus on ways to describe first-order properties, specifically, neighborhood density, intertree distance, and patch identification.</p>
+<p>###Neighborhood Density<br />
+Neighborhood density plots show the number of trees around each trees at a specific distance or range of distances. We will load the <code>spatstat</code> package, and create a <code>ppp</code> classed object using our coordinates and the bounds of the coordinates. Then we will select a single distance of 6 m and, with <code>nndist</code>, count the neighbors which fall within a 6 m radius. Last we will look at how the inclusion of neighbors depends on the neighborhood scale.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(spatstat)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">treemap =<span class="st"> </span><span class="kw">ppp</span>(trees<span class="op">$</span>x_m, trees<span class="op">$</span>y_m, <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">200</span>), <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">200</span>))</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">nneighbours =<span class="st"> </span><span class="kw">applynbd</span>(treemap, <span class="dt">R=</span><span class="dv">6</span>, <span class="cf">function</span>(Y, ...){<span class="kw">npoints</span>(Y)<span class="op">-</span><span class="dv">1</span>})</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">nneighbours =<span class="st"> </span><span class="kw">setNames</span>(<span class="kw">data.frame</span>(<span class="kw">nndist</span>(nneighbours)), <span class="st">&quot;nn&quot;</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="kw">ggplot</span>(nneighbours,<span class="kw">aes</span>(nn)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of neighbors within 6 m of tree&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Count&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="st">    </span><span class="kw">coord_cartesian</span>(<span class="dt">expand =</span> F)</a></code></pre></div>
+<p><img src="blog-spatstat-for-exploration_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Now we can look at the effect of the specific distance on neighborhood size.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">n_neighbors =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dist=</span><span class="ot">NA</span>, <span class="dt">neighbors =</span> <span class="ot">NA</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_len</span>(<span class="dv">10</span>)){</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">  n_neighbors =<span class="st"> </span><span class="kw">rbind</span>(n_neighbors, <span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="dt">dist =</span> i, <span class="dt">neighbors =</span> </a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">          <span class="kw">applynbd</span>(treemap, <span class="dt">R=</span>i, <span class="cf">function</span>(Y, ...){<span class="kw">npoints</span>(Y)<span class="op">-</span><span class="dv">1</span>})</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">  ))</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="kw">ggplot</span>(<span class="kw">na.omit</span>(n_neighbors),<span class="kw">aes</span>(<span class="kw">as.factor</span>(dist), neighbors)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;Distance from tree&#39;</span>,</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">                         <span class="dt">y=</span><span class="st">&quot;Number of neighbors at distance from tree&quot;</span>)</a></code></pre></div>
+<p><img src="blog-spatstat-for-exploration_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" /> These results show that the mean neighborhood size increases with scale of our distance from trees and so too does the spread across individual tree neighborhoods.</p>
+<div id="intertree-distances" class="section level3">
+<h3>Intertree distances</h3>
+<p>Now we also can describe the distances between trees. We can view this two ways: (1) the distance from every location to the nearest trees, or (2) the distance from every tree to its nearest neighboring tree. <code>spatstat</code> uses <code>distmap</code> to implement the first method. We will also use <code>ggplot2</code> for plotting but note that <code>spatstat</code> has functions for plotting via base graphics.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">disttree =<span class="st"> </span><span class="kw">distmap</span>(treemap)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">disttree =<span class="st"> </span><span class="kw">setNames</span>(<span class="kw">as.data.frame</span>(disttree), <span class="kw">c</span>(<span class="st">&#39;x&#39;</span>, <span class="st">&#39;y&#39;</span>, <span class="st">&#39;dist&#39;</span>))</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw">ggplot</span>(disttree,<span class="kw">aes</span>(x, y, <span class="dt">fill =</span> dist)) <span class="op">+</span><span class="st"> </span><span class="kw">coord_fixed</span>(<span class="dt">expand=</span>F) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">   </span><span class="kw">geom_raster</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">     </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;X (m)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Y (m)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_gradientn</span>(<span class="dt">colors=</span><span class="kw">terrain.colors</span>(<span class="dv">9</span>)[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">9</span>)])</a></code></pre></div>
+<p><img src="blog-spatstat-for-exploration_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" /> I tried to select colors that would emphasize some significant steps of intertree distances. We could categorize distances more explicitly, binning intertree distances into forest overstory canopy (&lt;3 m), inter-tree spaces (3 to 9 m), or as meadow (&gt;= 9 m).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">disttree<span class="op">$</span>class =<span class="st"> </span><span class="kw">with</span>(disttree, <span class="kw">ifelse</span>(dist<span class="op">&lt;</span><span class="dv">3</span>, <span class="st">&#39;overstory canopy&#39;</span>, <span class="kw">ifelse</span>(dist<span class="op">&lt;</span><span class="dv">9</span>, <span class="st">&#39;intertree&#39;</span>, <span class="st">&#39;meadow&#39;</span>)))</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">ggplot</span>(disttree,<span class="kw">aes</span>(x, y, <span class="dt">fill =</span> class)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">   </span><span class="kw">geom_raster</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="kw">coord_fixed</span>(<span class="dt">expand=</span>F) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">     </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;X (m)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Y (m)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">terrain.colors</span>(<span class="dv">9</span>)[<span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">1</span>)])</a></code></pre></div>
+<p><img src="blog-spatstat-for-exploration_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>This next approach looks at intertree distances strictly from the point of trees. This approach more readily lends its result to summary statistics and would be easily disaggregated or conditioned on other factors such as tree species.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">nntrees =<span class="st"> </span><span class="kw">setNames</span>(<span class="kw">data.frame</span>(<span class="kw">nndist</span>(treemap)), <span class="st">&quot;dist&quot;</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">ggplot</span>(nntrees,<span class="kw">aes</span>(dist, <span class="dt">fill =</span> dist)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Intertree distance (m)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of Trees&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">    </span><span class="kw">coord_cartesian</span>(<span class="dt">expand =</span> F)</a></code></pre></div>
+<p><img src="blog-spatstat-for-exploration_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="patch-identification" class="section level3">
+<h3>Patch identification</h3>
+<p>Patch identification is clustering method wherein pairwise chains of links are connected to identify member trees of unique clusters. Imagine starting with an individual tree and searching within a radius for trees. Then other member trees are sought within that search radius. This process is continued until there are no more trees within the search radii of member trees. All of the identified trees are then assigned to that unique patch. This method is popular in the forestry literature because results are easily interpretable for silviculturalists[^4].<br />
+Here we will identify patches by producing 6 m buffers from trees and splitting noncontiguous patches. And because we are likely to identify many different patches, we must bin them in order to visualize size variation among individual patches. A little bit of data manipulation is necessary.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">library</span>(sp)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw">library</span>(GISTools)</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">library</span>(raster)</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">trees.sp =<span class="st"> </span>trees</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="kw">coordinates</span>(trees.sp)&lt;-<span class="er">~</span>x_m<span class="op">+</span>y_m</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">trees.buffer =<span class="st"> </span><span class="kw">disaggregate</span>(<span class="kw">buffer</span>(trees.sp,<span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">trees.buffer<span class="op">$</span>patchsize =<span class="st"> </span><span class="kw">poly.counts</span>(trees.sp, trees.buffer) </a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">trees.buffer<span class="op">$</span>patchclass =<span class="st"> </span><span class="kw">as.character</span>(<span class="kw">cut</span>(trees.buffer<span class="op">$</span>patchsize, <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">9</span>,<span class="dv">19</span>, <span class="dv">2000</span>)))</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">trees.buffer<span class="op">$</span>patchclass =<span class="st"> </span><span class="kw">ifelse</span>(trees.buffer<span class="op">$</span>patchclass<span class="op">==</span><span class="st">&#39;(19,2e+03]&#39;</span>,<span class="st">&#39;20+&#39;</span>,</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">                          <span class="kw">ifelse</span>(trees.buffer<span class="op">$</span>patchclass<span class="op">==</span><span class="st">&#39;(4,9]&#39;</span>,<span class="st">&#39;5-9&#39;</span>,</a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">                          <span class="kw">ifelse</span>(trees.buffer<span class="op">$</span>patchclass<span class="op">==</span><span class="st">&#39;(0,1]&#39;</span>,<span class="st">&#39;1&#39;</span>,</a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">                          <span class="kw">ifelse</span>(trees.buffer<span class="op">$</span>patchclass<span class="op">==</span><span class="st">&#39;(9,19]&#39;</span>,<span class="st">&#39;10-19&#39;</span>,</a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">                                 <span class="st">&#39;2-4&#39;</span>))))</a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15">trees.buffer<span class="op">$</span>color =<span class="kw">ifelse</span>(trees.buffer<span class="op">$</span>patchclass <span class="op">==</span><span class="st"> &#39;20+&#39;</span>, <span class="st">&#39;#7fc97f&#39;</span>,</a>
+<a class="sourceLine" id="cb9-16" data-line-number="16">                    <span class="kw">ifelse</span>(trees.buffer<span class="op">$</span>patchclass <span class="op">==</span><span class="st"> &#39;10-19&#39;</span>, <span class="st">&#39;#beaed4&#39;</span>,</a>
+<a class="sourceLine" id="cb9-17" data-line-number="17">                    <span class="kw">ifelse</span>(trees.buffer<span class="op">$</span>patchclass <span class="op">==</span><span class="st"> &#39;5-9&#39;</span>, <span class="st">&#39;#fdc086&#39;</span>,</a>
+<a class="sourceLine" id="cb9-18" data-line-number="18">                    <span class="kw">ifelse</span>(trees.buffer<span class="op">$</span>patchclass <span class="op">==</span><span class="st"> &#39;2-4&#39;</span>, <span class="st">&#39;#ffff99&#39;</span>,<span class="st">&#39;#386cb0&#39;</span>))))</a>
+<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="kw">par</span>(<span class="dt">xpd=</span>T, <span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">9</span>))</a>
+<a class="sourceLine" id="cb9-20" data-line-number="20"><span class="kw">plot</span>(<span class="kw">extent</span>(trees.sp),<span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">200</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">200</span>), <span class="dt">xaxs=</span><span class="st">&quot;i&quot;</span>, <span class="dt">yaxs=</span><span class="st">&quot;i&quot;</span>, <span class="dt">xlab=</span><span class="st">&#39;X (m)&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;Y (m)&#39;</span>)</a>
+<a class="sourceLine" id="cb9-21" data-line-number="21"><span class="kw">plot</span>(trees.buffer, <span class="dt">col=</span>trees.buffer<span class="op">$</span>color, <span class="dt">add=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb9-22" data-line-number="22"><span class="kw">plot</span>(trees.sp,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">cex=</span><span class="fl">0.25</span>,<span class="dt">add=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb9-23" data-line-number="23"><span class="kw">legend</span>(<span class="dv">205</span>,<span class="dv">200</span>, <span class="dt">title=</span><span class="st">&#39;Patch size&#39;</span>,<span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;1&quot;</span>,<span class="st">&quot;2-4&quot;</span>,<span class="st">&quot;5-9&quot;</span>,<span class="st">&quot;10-19&quot;</span>, <span class="st">&quot;20+&quot;</span>),</a>
+<a class="sourceLine" id="cb9-24" data-line-number="24">       <span class="dt">fill=</span><span class="kw">c</span>(<span class="st">&quot;#386cb0&quot;</span>,<span class="st">&quot;#ffff99&quot;</span>,<span class="st">&quot;#fdc086&quot;</span>,<span class="st">&quot;#beaed4&quot;</span>,<span class="st">&quot;#7fc97f&quot;</span>))</a></code></pre></div>
+<p><img src="blog-spatstat-for-exploration_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>The search distance is of interest because it will influence the total number of identified patches and patch size. Six meters is useful here because that is the mean crown radius of these trees. In Ziegler et al. (2017) though, instead of a universal search distance, I used a variable distance defined by each individual tree’s crown radius. In that sense I was representing patches whose trees are approximately touching or overlapping.<br />
+Another approach is to use continuum percolation. Continuum percolation seeks to find an optimal scale to describe the clustering of stems into patches. In a sense, this maximizes the potentially available information that patches can yield with regards to trees’ spatial distribution. To implement continuum percolation, we examine the mean patch size as a function of the search distance.<br />
+Here will use a different function to construct and identify patch sizes, <code>connected.ppp</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">patchsize_dist =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">meansize=</span><span class="ot">NA</span>, <span class="dt">dist=</span><span class="dv">1</span><span class="op">:</span><span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_len</span>(<span class="dv">20</span>)) patchsize_dist<span class="op">$</span>meansize[i] =<span class="st"> </span><span class="kw">mean</span>(<span class="kw">table</span>(<span class="kw">marks</span>(<span class="kw">connected</span>(treemap,i))))</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">patchsize_dist<span class="op">$</span>meansize =<span class="st"> </span>patchsize_dist<span class="op">$</span>meansize <span class="op">/</span><span class="kw">max</span>(patchsize_dist<span class="op">$</span>meansize )</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw">ggplot</span>(patchsize_dist,<span class="kw">aes</span>(<span class="dt">x=</span>dist, <span class="dt">y=</span>meansize)) <span class="op">+</span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_smooth</span>( <span class="dt">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="dt">method.args =</span> <span class="kw">list</span>(<span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>), <span class="dt">se =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><img src="blog-spatstat-for-exploration_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;" /> The fitted logistic regression shows an inflection point at a scale of 12 m. This would be an optimal single scale to pursue an analysis of clustering. On the other hand, the empirical distribution has plateaus at 10m and 12m and 15m suggesting three distinct scales of clustering. Each of these may be ecologically meaningful.</p>
+<p>##Going further: Interactive stem-maps<br />
+Outside of use in traditional manuscripts, interactive plots may be useful ways to highlight data. I’ve only gotten started with interactive plots, and have started with <code>plotly</code>. To host offline plots, the process is simple:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;plotly&quot;</span>)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">g =<span class="st"> </span><span class="kw">ggplot</span>(trees, <span class="kw">aes</span>(x_m, y_m, <span class="dt">color=</span>type, <span class="dt">size =</span> dbh_cm)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="kw">coord_equal</span>(<span class="dt">expand=</span><span class="ot">FALSE</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&#39;grey&#39;</span>, <span class="st">&#39;black&#39;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_size</span>(<span class="dt">range=</span><span class="kw">c</span>(<span class="kw">min</span>(trees<span class="op">$</span>dbh_cm<span class="op">/</span><span class="dv">25</span>),<span class="kw">max</span>(trees<span class="op">$</span>dbh_cm<span class="op">/</span><span class="dv">25</span>))) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;X (m)&#39;</span>, <span class="dt">y=</span><span class="st">&#39;(Y (m)&#39;</span>)</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="kw">ggplotly</span>(g)</a></code></pre></div>
+<iframe src="https://plot.ly/~EcoFire/1.embed" width="800" height="600" id="igraph" scrolling="no" seamless="seamless" frameBorder="0">
+</iframe>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><strong>Ziegler, J.P.</strong>, Hoffman, C., Battaglia, M. and Mell, W., 2017. Spatially explicit measurements of forest structure and fire behavior following restoration treatments in dry forests. Forest Ecology and Management, 386, pp.1-12.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+
+  </div> <!-- articleBandContent -->
+</div> <!-- pageContent -->
+
+<footer class="no-print">
+  <div id="rbmvFooter" class="footer">
+    <div class="footerContent">
+    
+      <!-- column 1 -->
+      <div class="col-md-4">
+        <p><i class="fa fa-send fa-lg"></i> Connect with me<br>
+        <a href="mailto:Justin.Zieger@Colostate.edu">Justin.Zieger@Colostate.edu</a>
+        <br>
+        <br>
+      </div>
+
+      <!-- column 2 -->
+      <div class="col-md-4">
+        <a href="https://github.com/EcoFire">
+          <i class="fa fa-github fa-lg"></i> EcoFire GitHub</a>
+        <a href="https://www.linkedin.com/in/justin-p-ziegler-b5230466/">
+          <br>
+          <i class="fa fa-linkedin fa-lg"></i> My LinkedIn</a>
+		<a href="https://github.com/EcoFire">
+		<br>
+          <i class="fas fa-graduation-cap"></i> My Google Scholar</a>
+        <br>
+        <br>
+      </div>
+
+      <!-- column 3 -->
+      <div class="col-md-4">
+        <p class="text">I am a research associate and doctoral student studying spatial forest and fire dynamics. EcoFire is my platform to discuss ideas and methods behind the science. Thanks for visiting!</p>
+        <br>
+        <br>
+      </div>
+      <div class="top">
+        <p class="pull-right">
+          <a id="scrollTop" class="slowly" onclick="slowScrollTop()" href=#>
+            <i class="fa fa-angle-double-up"></i> Back to top
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- slow scrollTop function -->
+  <script type="text/javascript">
+    function slowScrollTop() { 
+      $('body').animate({ scrollTop: 0 }, 'slow'); 
+    } 
+  </script>
+  
+  <!-- page transition -->
+  <script type="text/javascript">
+    // fade content and not navbar in and out
+    $(document).ready(function fadeInOut() {
+      var non_navbar = $('.fluid-row,.section.level2,.summary,p,acrticle,h3,footer')
+      non_navbar.css('display', 'none');
+      non_navbar.fadeIn(800);
+    
+      $('.navbar-link').click(function(event) {
+        event.preventDefault();
+        newLocation = this.href;
+      
+        non_navbar.fadeOut('slow', newpage);
+      });
+    
+      function newpage() {
+        window.location = newLocation;
+      }
+    });
+  </script>
+  
+  <!-- google analytics -->
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-83611715-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+  
+</footer>
+
+<!-- disqus -->
+<script id="dsq-count-scr" src="//rbmv.disqus.com/count.js" async></script>
+<div id="disqus_thread" class="disqusPadding"></div>
+  <script>
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = '//ecofire.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

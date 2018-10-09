@@ -29,41 +29,69 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 <style type="text/css">
   pre:not([class]) {
@@ -214,9 +242,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">
-        <img alt="Brand" src="site_content/img/rbmv_curve.png" id="rbmv">
-      </a>
+      
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -227,10 +253,10 @@ $(document).ready(function () {
   <a href="index.html" onclick="fadeInOut()">
     <span class="fa fa-home"></span>
      
-    Home
+    as.numeric(ecology)
   </a>
 </li>
-<li>
+<!--<li>
   <a href="blog.html" onclick="fadeInOut()">
     <span class="fa fa-pencil-square-o"></span>
      
@@ -250,7 +276,7 @@ $(document).ready(function () {
      
     About
   </a>
-</li>
+</li>-->
 <li>
   <a href="mailto:Justin.Ziegler@Colostate.edu">
     <span class="fa fa-send-o"></span>
@@ -278,9 +304,7 @@ $(document).ready(function () {
 <blockquote>
 <p>I’m currently working on an package that compiles existing stem-maps from prior studies. I want to encourage other researchers to collaborate and share their datasets. Of course, the best way to ask for stem-maps is to first provide a way for researchers to construct stem-maps. This blog post describes how to derive a set of (X,Y) coordinates in Cartesian space using azimuth-distance obsevations.</p>
 </blockquote>
-<div id="a-brief-explanation-of-stem-mapping" class="section level3">
-<h3>A brief explanation of stem-mapping</h3>
-<p>While reduced technology continues to advance and GIS skills are now commonplace in any research group, sometimes the cost and complexity of dealing with high-precision GPS units (plus any time spent processing raw geospatial data) is overkill. Often, researchers just want to know how far every observation (trees in this example) is from every other observation (note: a map of spatial positions of trees is called a stem-map). Now there are many ways of accomplishing this task. The simplest is to call some point in space the origin (by convention it is the southwestern most point in your plot) and assume that the plot can be described in terms of Cartesian space (Cartesian coordinates are generally of two or three dimensions and dimensions share the same unit distance).</p>
+<p>###A brief explanation of stem-mapping While reduced technology continues to advance and GIS skills are now commonplace in any research group, sometimes the cost and complexity of dealing with high-precision GPS units (plus any time spent processing raw geospatial data) is overkill. Often, researchers just want to know how far every observation (trees in this example) is from every other observation (note: a map of spatial positions of trees is called a stem-map). Now there are many ways of accomplishing this task. The simplest is to call some point in space the origin (by convention it is the southwestern most point in your plot) and assume that the plot can be described in terms of Cartesian space (Cartesian coordinates are generally of two or three dimensions and dimensions share the same unit distance).</p>
 <p>There are three common methods for stem-mapping in the field:</p>
 <ol style="list-style-type: decimal">
 <li>Direct stem-mapping<br />
@@ -293,35 +317,34 @@ In this method, a reference point is chosen within the plot. By convention it is
 <br> 3. Sequential-reference stem-mapping<br />
 The last method starts with a reference point, measures the azimuth and distance to a target tree. The reference point often is a tree. In this example, we’ll call the original reference tree A and the first target tree B. So the original azimuth-distance observation describes A-&gt;B. Then, the azimuth and distance to the next tree, C, is measured from B. Then, from C to D, the azimuth and distance is measured, and so on. This method is great because there is very little chance of obstruction between nearby trees as the distances will be small. In addition, there is no need to establish plot corners unless desired and the plot can take on whatever shape desired, if it has any shape at all. This method can also be made to fit within a delineated plot. After converting azimuth and distance observations to (X,Y) coordinates, one could offset all coordinates by the (X,Y) of the initial reference tree.<br />
 <img src="site_content/img/blog_stem_mapping_3.gif" alt="Alt Text" /></p>
-</div>
 <div id="fixed-reference-stem-mapping" class="section level3">
 <h3>Fixed-reference stem-mapping</h3>
 <div id="from-a-corner" class="section level4">
 <h4>From a corner</h4>
 <p>I’ll demonstrate the methods and the calculations to convert azimuth-distance observations to (X,Y) coordinates starting with fixed-reference stem-mapping. Here <code>obs</code> includes the identity of trees, <code>treeNum</code>, <code>HD</code> is the horizontal distance from the reference point, and <code>AZ</code> is the azimuth from the reference point. The scenario here is that we are standing at (0,0), the plot is 70 m X 70 m, and we are measuring distance and azimuth from the origin to each tree. We will write a function to get our (X,Y) coordinates. Don’t dwell on the geometry but <em>it is important to recognize</em> that the specific equations we use depend whether the tree is in a northeast, southeast, southwest, or northwest quadrant from where we stand. Another thing to remember is that these trigonometric operators expect azimuth in radians whereas we almost always are measuring in degrees. So, if you see odd constants, they reference <span class="math inline">\(angle*\pi/180 = radians\)</span>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs =<span class="st"> </span><span class="kw">data.frame</span>(
-<span class="dt">treeNum =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">15</span>),
-<span class="dt">HD =</span> <span class="kw">c</span>(<span class="fl">70.1</span>, <span class="fl">61.9</span>, <span class="fl">55.9</span>, <span class="fl">54.0</span>, <span class="fl">48.0</span>, <span class="fl">46.4</span>, <span class="fl">43.2</span>, <span class="fl">43.0</span>, <span class="fl">56.2</span>, <span class="fl">49.2</span>, <span class="fl">52.2</span>, <span class="fl">42.2</span>, <span class="fl">42.6</span>, <span class="fl">36.8</span>, <span class="fl">36.9</span>), 
-<span class="dt">AZ =</span> <span class="kw">c</span>(<span class="fl">349.7</span>, <span class="fl">352.1</span>, <span class="fl">346.3</span>, <span class="fl">344.4</span>, <span class="fl">355.9</span>, <span class="fl">339.1</span>, <span class="fl">331.3</span>, <span class="fl">330.7</span>, <span class="fl">327.8</span>, <span class="fl">304.0</span>, <span class="fl">301.1</span>, <span class="fl">307.0</span>, <span class="fl">308.8</span>, <span class="fl">322.5</span>, <span class="fl">325.2</span>))
-
-map.fixedRef =<span class="st"> </span><span class="cf">function</span>(HD, AZ, <span class="dt">refX =</span> <span class="dv">0</span>, <span class="dt">refY =</span> <span class="dv">0</span>) {
-    theta =<span class="st"> </span>(<span class="dv">360</span> <span class="op">-</span><span class="st"> </span>AZ)
-    thetarad =<span class="st"> </span>theta <span class="op">*</span><span class="st"> </span>pi<span class="op">/</span><span class="dv">180</span>
-    x =<span class="st"> </span><span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">270</span>, HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(<span class="fl">6.283185</span> <span class="op">-</span><span class="st"> </span>thetarad),
-        <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">180</span>, <span class="op">-</span>HD <span class="op">*</span><span class="kw">cos</span>(thetarad <span class="op">-</span><span class="st"> </span><span class="fl">3.141593</span>),
-        <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(<span class="fl">3.141593</span> <span class="op">-</span><span class="st"> </span>thetarad),
-        HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(thetarad))))
-    y =<span class="st"> </span><span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">270</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(<span class="fl">6.283185</span> <span class="op">-</span><span class="st"> </span>thetarad),
-        <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">180</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(thetarad <span class="op">-</span><span class="st"> </span><span class="fl">3.141593</span>),
-        <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(<span class="fl">3.141593</span> <span class="op">-</span><span class="st"> </span>thetarad),
-        HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(thetarad))))
-    x =<span class="st"> </span>x <span class="op">+</span><span class="st"> </span>refX
-    y =<span class="st"> </span>y <span class="op">+</span><span class="st"> </span>refY
-    <span class="kw">return</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y))
-}
-XY =<span class="st"> </span><span class="kw">map.fixedRef</span>(obs<span class="op">$</span>HD,obs<span class="op">$</span>AZ)
-<span class="kw">plot</span>(XY,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>))
-<span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">70</span>,<span class="dv">70</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">obs =<span class="st"> </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="dt">treeNum =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">15</span>),</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="dt">HD =</span> <span class="kw">c</span>(<span class="fl">70.1</span>, <span class="fl">61.9</span>, <span class="fl">55.9</span>, <span class="fl">54.0</span>, <span class="fl">48.0</span>, <span class="fl">46.4</span>, <span class="fl">43.2</span>, <span class="fl">43.0</span>, <span class="fl">56.2</span>, <span class="fl">49.2</span>, <span class="fl">52.2</span>, <span class="fl">42.2</span>, <span class="fl">42.6</span>, <span class="fl">36.8</span>, <span class="fl">36.9</span>), </a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="dt">AZ =</span> <span class="kw">c</span>(<span class="fl">349.7</span>, <span class="fl">352.1</span>, <span class="fl">346.3</span>, <span class="fl">344.4</span>, <span class="fl">355.9</span>, <span class="fl">339.1</span>, <span class="fl">331.3</span>, <span class="fl">330.7</span>, <span class="fl">327.8</span>, <span class="fl">304.0</span>, <span class="fl">301.1</span>, <span class="fl">307.0</span>, <span class="fl">308.8</span>, <span class="fl">322.5</span>, <span class="fl">325.2</span>))</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">map.fixedRef =<span class="st"> </span><span class="cf">function</span>(HD, AZ, <span class="dt">refX =</span> <span class="dv">0</span>, <span class="dt">refY =</span> <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">    theta =<span class="st"> </span>(<span class="dv">360</span> <span class="op">-</span><span class="st"> </span>AZ)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">    thetarad =<span class="st"> </span>theta <span class="op">*</span><span class="st"> </span>pi<span class="op">/</span><span class="dv">180</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">    x =<span class="st"> </span><span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">270</span>, HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(<span class="fl">6.283185</span> <span class="op">-</span><span class="st"> </span>thetarad),</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">        <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">180</span>, <span class="op">-</span>HD <span class="op">*</span><span class="kw">cos</span>(thetarad <span class="op">-</span><span class="st"> </span><span class="fl">3.141593</span>),</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">        <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(<span class="fl">3.141593</span> <span class="op">-</span><span class="st"> </span>thetarad),</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">        HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(thetarad))))</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">    y =<span class="st"> </span><span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">270</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(<span class="fl">6.283185</span> <span class="op">-</span><span class="st"> </span>thetarad),</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">        <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">180</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(thetarad <span class="op">-</span><span class="st"> </span><span class="fl">3.141593</span>),</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">        <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(<span class="fl">3.141593</span> <span class="op">-</span><span class="st"> </span>thetarad),</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">        HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(thetarad))))</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">    x =<span class="st"> </span>x <span class="op">+</span><span class="st"> </span>refX</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">    y =<span class="st"> </span>y <span class="op">+</span><span class="st"> </span>refY</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">    <span class="kw">return</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y))</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">}</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">XY =<span class="st"> </span><span class="kw">map.fixedRef</span>(obs<span class="op">$</span>HD,obs<span class="op">$</span>AZ)</a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="kw">plot</span>(XY,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>))</a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">70</span>,<span class="dv">70</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a></code></pre></div>
 <p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-1-1.png" width="672" /> <br></p>
 </div>
 <div id="from-the-center" class="section level4">
@@ -330,79 +353,79 @@ XY =<span class="st"> </span><span class="kw">map.fixedRef</span>(obs<span class
 <div id="azimuth-and-distance-from-and-to-any-arbitrary-locations" class="section level5">
 <h5>Azimuth and distance from and to any arbitrary locations</h5>
 <p>We need to take a quick detour because I don’t have the data for you. Before we can move on, I need to figure out what the horizontal distances and azimuths are from the center. We need two pieces of information: the geographic center, which is the mean of the minima and maxima X and Y; and the difference in coordinate space between trees and the center. Again, there is some trig here that I won’t dive into.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">centerX =<span class="st"> </span>(<span class="kw">min</span>(XY<span class="op">$</span>x) <span class="op">+</span><span class="st"> </span><span class="kw">max</span>(XY<span class="op">$</span>x))<span class="op">/</span><span class="dv">2</span>
-centerY =<span class="st"> </span>(<span class="kw">min</span>(XY<span class="op">$</span>y) <span class="op">+</span><span class="st"> </span><span class="kw">max</span>(XY<span class="op">$</span>y))<span class="op">/</span><span class="dv">2</span>
-xdiff =<span class="st"> </span>centerX<span class="op">-</span>XY<span class="op">$</span>x  
-ydiff =<span class="st"> </span>centerY<span class="op">-</span>XY<span class="op">$</span>y
-
-obs<span class="op">$</span>HDcenter =<span class="st"> </span><span class="kw">sqrt</span>((XY<span class="op">$</span>x<span class="op">-</span>centerX)<span class="op">^</span><span class="dv">2</span><span class="op">+</span>(XY<span class="op">$</span>y<span class="op">-</span>centerY)<span class="op">^</span><span class="dv">2</span>)
-obs<span class="op">$</span>AZcenter =<span class="st"> </span><span class="op">-</span><span class="dv">180</span><span class="op">+</span>(<span class="kw">ifelse</span>(xdiff<span class="op">&gt;</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&lt;</span><span class="dv">0</span>, <span class="kw">abs</span>(<span class="kw">atan</span>(ydiff<span class="op">/</span>xdiff)), 
-     <span class="kw">ifelse</span>(xdiff<span class="op">&lt;</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&lt;</span><span class="dv">0</span>, pi<span class="op">-</span><span class="kw">abs</span>(<span class="kw">atan</span>(ydiff<span class="op">/</span>xdiff)), 
-     <span class="kw">ifelse</span>(xdiff<span class="op">&lt;</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&gt;=</span><span class="dv">0</span>, pi<span class="op">+</span><span class="kw">abs</span>(<span class="kw">atan</span>(ydiff<span class="op">/</span>xdiff)), 
-     <span class="kw">ifelse</span>(xdiff<span class="op">&gt;</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&gt;=</span><span class="dv">0</span>, <span class="dv">2</span><span class="op">*</span>pi<span class="op">-</span><span class="kw">abs</span>(<span class="kw">atan</span>(ydiff<span class="op">/</span>xdiff)), 
-     <span class="kw">ifelse</span>(xdiff<span class="op">==</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&gt;</span><span class="dv">0</span>, <span class="fl">1.5</span><span class="op">*</span>pi, 
-     <span class="kw">ifelse</span>(xdiff<span class="op">==</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&lt;</span><span class="dv">0</span>, .<span class="dv">5</span><span class="op">*</span>pi, <span class="dv">0</span> )))))))<span class="op">*</span><span class="dv">180</span><span class="op">/</span>pi</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">centerX =<span class="st"> </span>(<span class="kw">min</span>(XY<span class="op">$</span>x) <span class="op">+</span><span class="st"> </span><span class="kw">max</span>(XY<span class="op">$</span>x))<span class="op">/</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">centerY =<span class="st"> </span>(<span class="kw">min</span>(XY<span class="op">$</span>y) <span class="op">+</span><span class="st"> </span><span class="kw">max</span>(XY<span class="op">$</span>y))<span class="op">/</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">xdiff =<span class="st"> </span>centerX<span class="op">-</span>XY<span class="op">$</span>x  </a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">ydiff =<span class="st"> </span>centerY<span class="op">-</span>XY<span class="op">$</span>y</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">obs<span class="op">$</span>HDcenter =<span class="st"> </span><span class="kw">sqrt</span>((XY<span class="op">$</span>x<span class="op">-</span>centerX)<span class="op">^</span><span class="dv">2</span><span class="op">+</span>(XY<span class="op">$</span>y<span class="op">-</span>centerY)<span class="op">^</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">obs<span class="op">$</span>AZcenter =<span class="st"> </span><span class="dv">-180</span><span class="op">+</span>(<span class="kw">ifelse</span>(xdiff<span class="op">&gt;</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&lt;</span><span class="dv">0</span>, <span class="kw">abs</span>(<span class="kw">atan</span>(ydiff<span class="op">/</span>xdiff)), </a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">     <span class="kw">ifelse</span>(xdiff<span class="op">&lt;</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&lt;</span><span class="dv">0</span>, pi<span class="op">-</span><span class="kw">abs</span>(<span class="kw">atan</span>(ydiff<span class="op">/</span>xdiff)), </a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">     <span class="kw">ifelse</span>(xdiff<span class="op">&lt;</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&gt;=</span><span class="dv">0</span>, pi<span class="op">+</span><span class="kw">abs</span>(<span class="kw">atan</span>(ydiff<span class="op">/</span>xdiff)), </a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">     <span class="kw">ifelse</span>(xdiff<span class="op">&gt;</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&gt;=</span><span class="dv">0</span>, <span class="dv">2</span><span class="op">*</span>pi<span class="op">-</span><span class="kw">abs</span>(<span class="kw">atan</span>(ydiff<span class="op">/</span>xdiff)), </a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">     <span class="kw">ifelse</span>(xdiff<span class="op">==</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&gt;</span><span class="dv">0</span>, <span class="fl">1.5</span><span class="op">*</span>pi, </a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">     <span class="kw">ifelse</span>(xdiff<span class="op">==</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&lt;</span><span class="dv">0</span>, <span class="fl">.5</span><span class="op">*</span>pi, <span class="dv">0</span> )))))))<span class="op">*</span><span class="dv">180</span><span class="op">/</span>pi</a></code></pre></div>
 </div>
 <div id="back-to-your-regularly-scheduled-programming" class="section level5">
 <h5>Back to your regularly scheduled programming</h5>
 <p>Now we can take the vectors of horizontal distance-azimuth relative to the center and plug them into our function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">map.fixedRef</span>(obs<span class="op">$</span>HDcenter,obs<span class="op">$</span>AZcenter),<span class="dt">pch=</span><span class="dv">19</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">map.fixedRef</span>(obs<span class="op">$</span>HDcenter,obs<span class="op">$</span>AZcenter),<span class="dt">pch=</span><span class="dv">19</span>)</a></code></pre></div>
 <p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>Perfect. It is entirely acceptable to have a (0,0) centered stem-map. Though if you recall, it may be that one knows the center’s coordinates in relation to a plot corner. In our case, that is ( 47.18 , 24.06 ). So we can shift all the points back in line to our plot corner. If we did our job this plot should match the first one.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">map.fixedRef</span>(obs<span class="op">$</span>HDcenter,obs<span class="op">$</span>AZcenter, centerX,centerY),<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>))
-<span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">70</span>,<span class="dv">70</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">map.fixedRef</span>(obs<span class="op">$</span>HDcenter,obs<span class="op">$</span>AZcenter, centerX,centerY),<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>))</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">70</span>,<span class="dv">70</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a></code></pre></div>
 <p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 </div>
 <div id="going-further" class="section level4">
 <h4>Going further</h4>
 <p>Some stem-maps are huge. For example, I was able to help out with mapping the &gt;17 ha <a href="https://sites.warnercnr.colostate.edu/pfdp/">Pike Forest Dynamics Plot</a>. In this case, the plot had to be subdivided into a grid of subplots. For each subplot, a corner can become the reference point for subsets of trees. I’ll explain… Let’s say we have a 210 m x 70 m plot that is divided into three subplots of equal area; that’s 3x the size of the imaginary plot with have been working with. For this example, we will pretend we are in the middle subplot, thus our reference point is (70,0).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">subplot =<span class="st"> </span><span class="kw">map.fixedRef</span>(obs<span class="op">$</span>HD,obs<span class="op">$</span>AZ, <span class="dt">refX=</span><span class="dv">70</span>,<span class="dt">refY=</span><span class="dv">0</span>)
-
-<span class="kw">plot</span>(subplot,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">215</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>))
-<span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">70</span>,<span class="dv">70</span>,<span class="dt">lwd=</span><span class="dv">2</span>)
-<span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">140</span>,<span class="dv">70</span>,<span class="dt">lwd=</span><span class="dv">2</span>)
-<span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">210</span>,<span class="dv">70</span>,<span class="dt">lwd=</span><span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">subplot =<span class="st"> </span><span class="kw">map.fixedRef</span>(obs<span class="op">$</span>HD,obs<span class="op">$</span>AZ, <span class="dt">refX=</span><span class="dv">70</span>,<span class="dt">refY=</span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">plot</span>(subplot,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">215</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>))</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">70</span>,<span class="dv">70</span>,<span class="dt">lwd=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">140</span>,<span class="dv">70</span>,<span class="dt">lwd=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">210</span>,<span class="dv">70</span>,<span class="dt">lwd=</span><span class="dv">2</span>)</a></code></pre></div>
 <p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 </div>
 <div id="sequential-reference-stem-mapping" class="section level3">
 <h3>Sequential-reference stem-mapping</h3>
 <p>I have no real-world experience with sequential stem-mapping but it looks much easier to do in the field. It’s best to imagine a chain of linked trees where we hop from one to the next during our measurements. <code>treeorigintarget</code> describes the pair of reference and target tree identities, <code>HD</code> is the horizontal distance between the trees, and <code>AZ</code> is azimuth from the reference tree to the target tree.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs =<span class="st"> </span><span class="kw">data.frame</span>(
-  <span class="dt">treeorigintarget =</span> <span class="kw">c</span>(<span class="st">&quot;(1-2)&quot;</span>, <span class="st">&quot;(2-3)&quot;</span>, <span class="st">&quot;(3-4)&quot;</span>, <span class="st">&quot;(4-5)&quot;</span>, <span class="st">&quot;(5-6)&quot;</span>, <span class="st">&quot;(6-7)&quot;</span>, <span class="st">&quot;(7-8)&quot;</span>, <span class="st">&quot;(8-9)&quot;</span>, <span class="st">&quot;(9-10)&quot;</span>, <span class="st">&quot;(10-11)&quot;</span>, <span class="st">&quot;(11-12)&quot;</span>, <span class="st">&quot;(12-13)&quot;</span>, <span class="st">&quot;(13-14)&quot;</span>, <span class="st">&quot;(14-15)&quot;</span>),
-  <span class="dt">HD =</span> <span class="kw">c</span>(<span class="fl">8.6</span>, <span class="fl">8.5</span>, <span class="fl">2.6</span>, <span class="fl">11.9</span>, <span class="fl">13.8</span>, <span class="fl">6.9</span>, <span class="fl">0.4</span>, <span class="fl">13.4</span>, <span class="fl">22.8</span>, <span class="fl">3.9</span>, <span class="fl">11.1</span>, <span class="fl">1.4</span>, <span class="fl">11.1</span>, <span class="fl">1.8</span>),
-  <span class="dt">AZ =</span> <span class="kw">c</span>(<span class="fl">152.1</span>, <span class="fl">213.1</span>, <span class="fl">210.8</span>, <span class="fl">110.5</span>, <span class="fl">251.1</span>, <span class="fl">217.4</span>, <span class="fl">228.1</span>, <span class="fl">318.2</span>, <span class="fl">208.7</span>, <span class="fl">261.8</span>, <span class="fl">97.8</span>, <span class="fl">22.7</span>, <span class="fl">77.5</span>, <span class="fl">49.3</span>)
-)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">obs =<span class="st"> </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="dt">treeorigintarget =</span> <span class="kw">c</span>(<span class="st">&quot;(1-2)&quot;</span>, <span class="st">&quot;(2-3)&quot;</span>, <span class="st">&quot;(3-4)&quot;</span>, <span class="st">&quot;(4-5)&quot;</span>, <span class="st">&quot;(5-6)&quot;</span>, <span class="st">&quot;(6-7)&quot;</span>, <span class="st">&quot;(7-8)&quot;</span>, <span class="st">&quot;(8-9)&quot;</span>, <span class="st">&quot;(9-10)&quot;</span>, <span class="st">&quot;(10-11)&quot;</span>, <span class="st">&quot;(11-12)&quot;</span>, <span class="st">&quot;(12-13)&quot;</span>, <span class="st">&quot;(13-14)&quot;</span>, <span class="st">&quot;(14-15)&quot;</span>),</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">  <span class="dt">HD =</span> <span class="kw">c</span>(<span class="fl">8.6</span>, <span class="fl">8.5</span>, <span class="fl">2.6</span>, <span class="fl">11.9</span>, <span class="fl">13.8</span>, <span class="fl">6.9</span>, <span class="fl">0.4</span>, <span class="fl">13.4</span>, <span class="fl">22.8</span>, <span class="fl">3.9</span>, <span class="fl">11.1</span>, <span class="fl">1.4</span>, <span class="fl">11.1</span>, <span class="fl">1.8</span>),</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">  <span class="dt">AZ =</span> <span class="kw">c</span>(<span class="fl">152.1</span>, <span class="fl">213.1</span>, <span class="fl">210.8</span>, <span class="fl">110.5</span>, <span class="fl">251.1</span>, <span class="fl">217.4</span>, <span class="fl">228.1</span>, <span class="fl">318.2</span>, <span class="fl">208.7</span>, <span class="fl">261.8</span>, <span class="fl">97.8</span>, <span class="fl">22.7</span>, <span class="fl">77.5</span>, <span class="fl">49.3</span>)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">)</a></code></pre></div>
 <p>The function here will do the hard work. It is similar to our prior function except there is an intermediate step. First we calculate the (X,Y) of the target tree in relation to the reference tree. Once we do that, we assume the initial reference tree is the origin and then sequentially sum up the relative (X,Y)’s to determine an absolute (X,Y) of all trees in relation to the initial reference tree.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map.sequenceRef =<span class="st"> </span><span class="cf">function</span>(HD, AZ, <span class="dt">iniX =</span> <span class="dv">0</span>, <span class="dt">iniY =</span> <span class="dv">0</span>) {
-    theta =<span class="st"> </span><span class="dv">360</span> <span class="op">-</span><span class="st"> </span>AZ
-    thetarad =<span class="st"> </span>theta <span class="op">*</span><span class="st"> </span>pi<span class="op">/</span><span class="dv">180</span>
-    relative.x =<span class="st"> </span><span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">270</span>, HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(<span class="fl">6.283185</span> <span class="op">-</span><span class="st"> </span>thetarad),
-                 <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">180</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(thetarad <span class="op">-</span><span class="st"> </span><span class="fl">3.141593</span>),
-                 <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(<span class="fl">3.141593</span> <span class="op">-</span><span class="st"> </span>thetarad),
-                 HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(thetarad))))
-    relative.y =<span class="st"> </span><span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">270</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(<span class="fl">6.283185</span> <span class="op">-</span><span class="st"> </span>thetarad),
-                 <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="dv">180</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(thetarad <span class="op">-</span><span class="st"> </span><span class="fl">3.141593</span>),
-                 <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(<span class="fl">3.141593</span> <span class="op">-</span><span class="st"> </span>thetarad),
-                 HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(thetarad))))
-    x =<span class="st"> </span><span class="kw">rep</span>(iniX, <span class="kw">length</span>(relative.x) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)
-    y =<span class="st"> </span><span class="kw">rep</span>(iniY, <span class="kw">length</span>(relative.y) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)
-
-    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>(<span class="kw">length</span>(x))) {
-        x[i] =<span class="st"> </span>x[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>relative.x[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]
-        y[i] =<span class="st"> </span>y[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>relative.y[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]
-    }
-    <span class="kw">return</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y))
-}
-
-XY =<span class="st"> </span><span class="kw">map.sequenceRef</span>(obs<span class="op">$</span>HD,obs<span class="op">$</span>AZ)
-<span class="kw">plot</span>(XY,<span class="dt">pch=</span><span class="dv">19</span>)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">map.sequenceRef =<span class="st"> </span><span class="cf">function</span>(HD, AZ, <span class="dt">iniX =</span> <span class="dv">0</span>, <span class="dt">iniY =</span> <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">    theta =<span class="st"> </span><span class="dv">360</span> <span class="op">-</span><span class="st"> </span>AZ</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">    thetarad =<span class="st"> </span>theta <span class="op">*</span><span class="st"> </span>pi<span class="op">/</span><span class="dv">180</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">    relative.x =<span class="st"> </span><span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">270</span>, HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(<span class="fl">6.283185</span> <span class="op">-</span><span class="st"> </span>thetarad),</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">                 <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">180</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(thetarad <span class="op">-</span><span class="st"> </span><span class="fl">3.141593</span>),</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">                 <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(<span class="fl">3.141593</span> <span class="op">-</span><span class="st"> </span>thetarad),</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">                 HD <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>(thetarad))))</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">    relative.y =<span class="st"> </span><span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">270</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(<span class="fl">6.283185</span> <span class="op">-</span><span class="st"> </span>thetarad),</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">                 <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="dv">180</span>, <span class="op">-</span>HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(thetarad <span class="op">-</span><span class="st"> </span><span class="fl">3.141593</span>),</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">                 <span class="kw">ifelse</span>(theta <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(<span class="fl">3.141593</span> <span class="op">-</span><span class="st"> </span>thetarad),</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">                 HD <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(thetarad))))</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">    x =<span class="st"> </span><span class="kw">rep</span>(iniX, <span class="kw">length</span>(relative.x) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">    y =<span class="st"> </span><span class="kw">rep</span>(iniY, <span class="kw">length</span>(relative.y) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>(<span class="kw">length</span>(x))) {</a>
+<a class="sourceLine" id="cb7-16" data-line-number="16">        x[i] =<span class="st"> </span>x[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>relative.x[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb7-17" data-line-number="17">        y[i] =<span class="st"> </span>y[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>relative.y[i <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb7-18" data-line-number="18">    }</a>
+<a class="sourceLine" id="cb7-19" data-line-number="19">    <span class="kw">return</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y))</a>
+<a class="sourceLine" id="cb7-20" data-line-number="20">}</a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb7-22" data-line-number="22">XY =<span class="st"> </span><span class="kw">map.sequenceRef</span>(obs<span class="op">$</span>HD,obs<span class="op">$</span>AZ)</a>
+<a class="sourceLine" id="cb7-23" data-line-number="23"><span class="kw">plot</span>(XY,<span class="dt">pch=</span><span class="dv">19</span>)</a></code></pre></div>
 <p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>Again, it is possible to shift (X,Y) coordinates if we are trying to tie coordinates into a plot. We can do this if we know the (X,Y) of our initial reference tree.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">XY =<span class="st"> </span><span class="kw">map.sequenceRef</span>(obs<span class="op">$</span>HD, obs<span class="op">$</span>AZ, <span class="dt">iniX =</span> <span class="fl">68.97</span>, <span class="dt">iniY =</span> <span class="fl">12.53</span>)
-<span class="kw">plot</span>(XY,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>))
-<span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">70</span>,<span class="dv">70</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">XY =<span class="st"> </span><span class="kw">map.sequenceRef</span>(obs<span class="op">$</span>HD, obs<span class="op">$</span>AZ, <span class="dt">iniX =</span> <span class="fl">68.97</span>, <span class="dt">iniY =</span> <span class="fl">12.53</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">plot</span>(XY,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>))</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">70</span>,<span class="dv">70</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a></code></pre></div>
 <p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 <div id="conclusion" class="section level3">
