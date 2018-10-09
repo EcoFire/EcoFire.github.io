@@ -30,7 +30,7 @@ What information is plotted here:
 There is some second order information that can be gleaned here. First, a viewer will start to look for patterns in the relative positioning of trees, 'Are they groupy, are they overdispersed?'. Next a viewer will look at how the spatial patterns vary with trees size, 'Do trees of different sizes have different patterns? How do trees of different sizes relate to each other spatially?'. These exploratory plots are excellent for hypothesis generation. 
 
 Here is the code to produce such a plot. We will use the same data from Ziegler et al. (2017)[^1] that we explored [in a prior post](blog-forest-typing-with-stem-maps.html). This plot has locations of trees observed before and after a cutting. 
-```{r, fig.width=7, fig.height=3.5}
+```{r, fig.width=7, fig.height=4}
 trees <- read.table("https://raw.githubusercontent.com/EcoFire/EcoFire.github.io/master/site_content/data/redfeather.txt", header = T)
 par(mfrow = c(1, 2))
 precutting_stemmap <- with(trees, plot(x_m, y_m, pch = 19, cex = dbh_cm/40, 
@@ -53,7 +53,7 @@ par(mfrow = c(1, 1))
 ggplot(trees, aes(x_m, y_m, color = type, size = dbh_cm)) + geom_point() + 
     theme_classic() + coord_equal() + scale_color_manual(values = c("grey", 
     "black")) + scale_size(range = c(min(trees$dbh_cm/25), max(trees$dbh_cm/25))) +
-  labs(x='X (m)', 'Y (m)')
+  labs(x='X (m)', y='Y (m)')
 ```
 
 ### Plotting even more information
@@ -63,7 +63,7 @@ There is a rank order of information that we want to convey. In our plotting we 
 ggplot(trees, aes(x_m, y_m, color = type, size = dbh_cm)) + geom_point() + 
     theme_classic() + scale_color_manual(values = c("grey", 
     "black")) + scale_size(range = c(min(trees$dbh_cm/25), max(trees$dbh_cm/25))) + 
-    facet_wrap(~species) +  labs(x='X (m)', 'Y (m)')
+    facet_wrap(~species) +  labs(x='X (m)', y='Y (m)')
 ```
 <br>
 In this case, adding species contributed to our interpretation of these data; specifically, there are some interesting *within*-species patterns. So the rank order of information importance that we imposed seemed to have been a good decision. One barely needs to examine the legend in order to interpret the plot. Of course, we can't know if there are other interesting trends unless we visualize the data according to some other rank order, so it's always a good way to change up how we visualize each factor.
@@ -186,7 +186,7 @@ ggplotly(g)
 
 ```{r, echo=F, message=F, warning=F}
 library("plotly")
-g = ggplot(trees, aes(x_m, y_m, color=type, size = dbh_cm)) + geom_point() +theme_classic() +coord_equal(expand=FALSE)+ scale_color_manual(values=c('grey', 'black'))+ scale_size(range=c(min(trees$dbh_cm/25),max(trees$dbh_cm/25))) +labs(x='X (m)', y='(Y (m)')
+g = ggplot(trees, aes(x_m, y_m, color=type, size = dbh_cm)) + geom_point() +theme_classic() +coord_equal(expand=FALSE)+ scale_color_manual(values=c('grey', 'black'))+ scale_size(range=c(min(trees$dbh_cm/25),max(trees$dbh_cm/25))) +labs(x='X (m)', y='Y (m)')
 
 api_create(ggplotly(g), filename = "r-example-stemmap")
 ```
