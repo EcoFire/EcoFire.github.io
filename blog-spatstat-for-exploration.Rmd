@@ -1,7 +1,7 @@
 ---
 title: "Exploratory Analysis of Point Patterns"
 author: "Justin Ziegler"
-date: "October 15, 2018"
+date: "October 24, 2018"
 output: 
   html_document:
     excludes:
@@ -30,47 +30,49 @@ What information is plotted here:
 There is some second order information that can be gleaned here. First, a viewer will start to look for patterns in the relative positioning of trees, 'Are they groupy, are they overdispersed?'. Next a viewer will look at how the spatial patterns vary with trees size, 'Do trees of different sizes have different patterns? How do trees of different sizes relate to each other spatially?'. These exploratory plots are excellent for hypothesis generation. 
 
 Here is the code to produce such a plot. We will use the same data from Ziegler et al. (2017)[^1] that we explored [in a prior post](blog-forest-typing-with-stem-maps.html). This plot has locations of trees observed before and after a cutting. 
-```{r, fig.width=7}
-trees <- read.table("site_content/data/redfeather.txt", header = T)
+```{r, fig.width=7, fig.height=3.5}
+trees <- read.table("https://raw.githubusercontent.com/EcoFire/EcoFire.github.io/master/site_content/data/redfeather.txt", header = T)
 par(mfrow = c(1, 2))
 precutting_stemmap <- with(trees, plot(x_m, y_m, pch = 19, cex = dbh_cm/40, 
     yaxs = "i", xaxs = "i", sub = "Before Cutting", xlab = "X Coordinate\n", 
-    ylab = "Y coordinate"))
+    ylab = "Y (m)"))
 postcutting_stemmap <- with(trees[trees$type == "Tree", ], plot(x_m, 
     y_m, pch = 19, cex = dbh_cm/40, yaxs = "i", xaxs = "i", sub = "After Cutting", 
-    xlab = "X Coordinate\n", ylab = "", yaxt = "n"))
+    xlab = "X (m)\n", ylab = "", yaxt = "n"))
 axis(side = 2, labels = F)
 ```
 <br>
 That looks pretty good to me. It's actually not far from publication-quality.  
 
 ### Adding categorical information
-Thus far we have plotted (X,Y) coordinates with sizes scaled by a continuous attribute. Like any scatter plot we could continue modifying the plot to add information. For example, we could assign a shape to represent each tree's species and/or use a color gradient for an additional ordinal or continuous attribute. In this case we will plot the cut trees (stumps) together with the residual trees (tree). The plot we're making here comes from Ziegler et al. (2017). *Hey, we're almost, kind of, doing scientific replication!*  
+Thus far we have plotted (X,Y) coordinates with sizes scaled by a continuous attribute. Like any scatter plot we could continue modifying the plot to add information. For example, we could assign a shape to represent each tree's species and/or use a color gradient for an additional ordinal or continuous attribute. In this case we will plot the cut trees (stumps) together with the residual trees (tree). The plot we're making is one of a panel in Figure 3 in Ziegler et al. (2017). *Hey, we're almost, kind of, doing scientific replication!*  
 
 ```{r fig.align="center", fig.width=6}
 library("ggplot2")
 par(mfrow = c(1, 1))
 ggplot(trees, aes(x_m, y_m, color = type, size = dbh_cm)) + geom_point() + 
     theme_classic() + coord_equal() + scale_color_manual(values = c("grey", 
-    "black")) + scale_size(range = c(min(trees$dbh_cm/25), max(trees$dbh_cm/25)))
+    "black")) + scale_size(range = c(min(trees$dbh_cm/25), max(trees$dbh_cm/25))) +
+  labs(x='X (m)', 'Y (m)')
 ```
 
 ### Plotting even more information
-We'll now add on species. Now there are many ways we can add this into our current plot, but my general rule of thumb is to reasonably limit the pieces of information should be in a single plot. Too much and your audience won't know what they should pay attention to.    
+We'll now add on species. There are many ways we can add this into our current plot, but my general rule of thumb is to reasonably limit the pieces of information should be in a single plot. Too much and your audience won't know what they should pay attention to.    
 There is a rank order of information that we want to convey. In our plotting we have implied that (X,Y) comes first because they get the axes, then type (stump or tree) because our colors provide significant visual contrast, and last size. Now we will add a panel which physically divides the spaces occupied by our species. Species becomes the least important variable because a viewer must now make contrasts *across* plots to identify differences by species.  
-```{r  fig.align="center", fig.width=6}
+```{r  fig.align="center", fig.width=7, fig.height=2.5}
 ggplot(trees, aes(x_m, y_m, color = type, size = dbh_cm)) + geom_point() + 
     theme_classic() + scale_color_manual(values = c("grey", 
     "black")) + scale_size(range = c(min(trees$dbh_cm/25), max(trees$dbh_cm/25))) + 
-    facet_wrap(~species)
+    facet_wrap(~species) +  labs(x='X (m)', 'Y (m)')
 ```
 <br>
 In this case, adding species contributed to our interpretation of these data; specifically, there are some interesting *within*-species patterns. So the rank order of information importance that we imposed seemed to have been a good decision. One barely needs to examine the legend in order to interpret the plot. Of course, we can't know if there are other interesting trends unless we visualize the data according to some other rank order, so it's always a good way to change up how we visualize each factor.
 
 ## Plotting first-order spatial information
 In point pattern analyses, we can describe first- and second-order properties. First-order properties arise from the density of points and second-order properties arise from the interaction of points (and are generally normalized by global, regional or local densities). Here we will focus on ways to describe first-order properties, specifically, neighborhood density, intertree distance, and patch identification.  
+<br>
 
-###Neighborhood Density   
+### Neighborhood Density    
 Neighborhood density plots show the number of trees around each trees at a specific distance or range of distances. We will load the `spatstat` package, and create a `ppp` classed object using our coordinates and the bounds of the coordinates. Then we will select a single distance of 6 m and, with `nndist`, count the neighbors which fall within a 6 m radius. Last we will look at how the inclusion of neighbors depends on the neighborhood scale.  
 ```{r message=FALSE, warning=F}
 library(spatstat)
@@ -128,7 +130,7 @@ ggplot(nntrees,aes(dist, fill = dist)) +
 ```
 
 ### Patch identification
-Patch identification is clustering method wherein pairwise chains of links are connected to identify member trees of unique clusters. Imagine starting with an individual tree and searching within a radius for trees. Then other member trees are sought within that search radius. This process is continued until there are no more trees within the search radii of member trees. All of the identified trees are then assigned to that unique patch. This method is popular in the forestry literature because results are easily interpretable for silviculturalists[^4].  
+Patch identification is clustering method wherein pairwise chains of links are connected to identify member trees of unique clusters. Imagine starting with an individual tree and searching within a radius for trees. Then other member trees are sought within that search radius. This process is continued until there are no more trees within the search radii of member trees. All of the identified trees are then assigned to that unique patch. This method is popular in the forestry literature because results are easily interpretable for silviculturalists[^2].  
 Here we will identify patches by producing 6 m buffers from trees and splitting noncontiguous  patches. And because we are likely to identify many different patches, we must bin them in order to visualize size variation among individual patches. A little bit of data manipulation is necessary.
 
 ```{r warning=FALSE, message=FALSE}
@@ -158,7 +160,7 @@ legend(205,200, title='Patch size',legend=c("1","2-4","5-9","10-19", "20+"),
        fill=c("#386cb0","#ffff99","#fdc086","#beaed4","#7fc97f"))
 ```
 
-The search distance is of interest because it will influence the total number of identified patches and patch size. Six meters is useful here because that is the mean crown radius of these trees. In Ziegler et al. (2017) though, instead of a universal search distance, I used a variable distance defined by each individual tree's crown radius. In that sense I was representing patches whose trees are approximately touching or overlapping.  
+The search distance is of interest because it will influence the total number of identified patches and patch size. Six meters is useful here because that is the mean crown radius of these trees. In Ziegler et al. (2017), instead of a universal search distance, we used a variable distance defined by each individual tree's crown radius. In that sense I was representing patches whose trees are approximately touching or overlapping.  
 Another approach is to use continuum percolation. Continuum percolation seeks to find an optimal scale to describe the clustering of stems into patches. In a sense, this maximizes the potentially available information that patches can yield with regards to trees' spatial distribution. To implement continuum percolation, we examine the mean patch size as a function of the search distance.  
 Here will use a different function to construct and identify patch sizes, `connected.ppp`.
 ```{r warning=FALSE}
@@ -168,9 +170,9 @@ patchsize_dist$meansize = patchsize_dist$meansize /max(patchsize_dist$meansize )
 ggplot(patchsize_dist,aes(x=dist, y=meansize)) +geom_line() + theme_classic() + 
   geom_smooth( method = "glm", method.args = list(family = "binomial"), se = FALSE)
 ```
-The fitted logistic regression shows an inflection point at a scale of 12 m. This would be an optimal single scale to pursue an analysis of clustering. On the other hand, the empirical distribution has plateaus at 10m and 12m and 15m suggesting three distinct scales of clustering. Each of these may be ecologically meaningful. 
+The fitted logistic regression shows an inflection point at a scale of 13 m. This would be an optimal single scale to pursue an analysis of clustering. On the other hand, the empirical distribution has plateaus at 10m and 13m and 15m suggesting three distinct scales of clustering. Each of these may be ecologically meaningful. 
 
-##Going further: Interactive stem-maps  
+## Going further: Interactive stem-maps   
 Outside of use in traditional manuscripts, interactive plots may be useful ways to highlight data. I've only gotten started with interactive plots, and have started with `plotly`. To host offline plots, the process is simple:
 ```{r, message=F, eval=F}
 library("plotly")
@@ -189,4 +191,5 @@ g = ggplot(trees, aes(x_m, y_m, color=type, size = dbh_cm)) + geom_point() +them
 api_create(ggplotly(g), filename = "r-example-stemmap")
 ```
 
-[^1]: **Ziegler, J.P.**, Hoffman, C., Battaglia, M. and Mell, W., 2017. Spatially explicit measurements of forest structure and fire behavior following restoration treatments in dry forests. Forest Ecology and Management, 386, pp.1-12.
+[^1]: **Ziegler, J.P.**, Hoffman, C., Battaglia, M. and Mell, W., 2017. Spatially explicit measurements of forest structure and fire behavior following restoration treatments in dry forests. Forest Ecology and Management, 386, pp.1-12.  
+[^2]: Terminology is a bit of a stickler here. In statistics parlance, these are clusters. Biologically speaking we could refer to these as groups, but group retention and group cutting have specific definitions. Here I opt for the more landscape ecology terminology of patch. 

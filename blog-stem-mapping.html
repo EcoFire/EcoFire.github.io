@@ -11,7 +11,7 @@
 
 <meta name="author" content="Justin Ziegler" />
 
-<meta name="date" content="2018-10-15" />
+<meta name="date" content="2018-10-17" />
 
 <title>Constructing stem-maps in R</title>
 
@@ -295,7 +295,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Constructing stem-maps in R</h1>
 <h4 class="author"><em>Justin Ziegler</em></h4>
-<h4 class="date"><em>October 15, 2018</em></h4>
+<h4 class="date"><em>October 17, 2018</em></h4>
 
 </div>
 
@@ -304,23 +304,26 @@ $(document).ready(function () {
 <blockquote>
 <p>I’m currently working on an package that compiles existing stem-maps from prior studies. I want to encourage other researchers to collaborate and share their datasets. Of course, the best way to ask for stem-maps is to first provide a way for researchers to construct stem-maps. This blog post describes how to derive a set of (X,Y) coordinates in Cartesian space using azimuth-distance obsevations.</p>
 </blockquote>
-<p>###A brief explanation of stem-mapping While reduced technology continues to advance and GIS skills are now commonplace in any research group, sometimes the cost and complexity of dealing with high-precision GPS units (plus any time spent processing raw geospatial data) is overkill. Often, researchers just want to know how far every observation (trees in this example) is from every other observation (note: a map of spatial positions of trees is called a stem-map). Now there are many ways of accomplishing this task. The simplest is to call some point in space the origin (by convention it is the southwestern most point in your plot) and assume that the plot can be described in terms of Cartesian space (Cartesian coordinates are generally of two or three dimensions and dimensions share the same unit distance).</p>
+<div id="a-brief-explanation-of-stem-mapping" class="section level2">
+<h2>A brief explanation of stem-mapping</h2>
+<p>While technology continues to advance as costs go down, and GIS skills are also now commonplace in any research group, sometimes the cost and complexity of dealing with high-precision GPS units (plus any time spent processing raw geospatial data) is overkill. Often, researchers just want to know how far every observation (trees in this example) is from every other observation (note: a map of spatial positions of trees is called a stem-map). Now there are many ways of accomplishing this task. The simplest is to call some point in space the origin (by convention it is the southwestern most point in your plot) and assume that the plot can be described in terms of Cartesian space (Cartesian coordinates are generally of two or three dimensions and dimensions share the same unit distance).</p>
 <p>There are three common methods for stem-mapping in the field:</p>
 <ol style="list-style-type: decimal">
 <li>Direct stem-mapping<br />
-In the first, a bounding box is installed to delimit an plot; that is, the corners of the plot are identified To map trees within the plot, two measures are taken: the X coordinate and the Y coordinate. The picture below illustrates. First, the azimuth from Point A to Point B, along the X axis, is used as a baseline. Then the observer moves along the X axis, measuring the azimuth from the the observer’s location (1) until the observer finds the distance along the X axis where the azimuth to the tree is perpindicular to the baseline (2). That distance along the X axis is recorded as the tree’s X coordinate. The observer can either measure the distance from the X axis to the tree to estmate Y or the observed can repeat the same process along the Y axis to find the Y coordinate of the tree. The advantage of this method is that no further transformation of observations is needed; the (X,Y) of the tree is known. The disadvantages are that it can be tediously slow, as it also requires that the plot edges must be marked with measuring tape, and there is a potential for obstructed views. If views are obstructed, the observer can move to another boundary. Another disadvantage is that the lengths along axes must be corrected for slope in order to reveal horizontal distance. This isn’t problematic for sloped planes, but real-world topography is undulating. In general I would not recommend this method because of slope and time issues. Because this method yields (X,Y) coordinations, I won’t show examples in R.<br />
-<img src="site_content/img/blog_stem_mapping_1.gif" alt="Alt Text" /></li>
+In the first, a bounding box is installed to delimit an plot; that is, the corners of the plot are identified. To map trees within the plot, two measures are taken: the X coordinate and the Y coordinate. The picture below illustrates. First, the azimuth from Point A to Point B, along the X axis, is used as a baseline. Then the observer moves along the X axis, measuring the azimuth from the the observer’s location (1) until the observer finds the distance along the X axis where the azimuth to the tree is perpindicular to the baseline (2). That distance along the X axis is recorded as the tree’s X coordinate. The observer can either measure the distance from the X axis to the tree to estimate the Y coordinate or the observed can repeat the same process along the Y axis to find the Y coordinate of the tree. The advantage of this method is that no further transformation of observations is needed; the (X,Y) of the tree is known. The disadvantages are that it can be tediously slow, as it also requires that the plot edges must be marked with measuring tape, and there is a potential for obstructed views. If views are obstructed, the observer can move to another boundary. Another disadvantage is that the lengths along axes must be corrected for slope in order to reveal horizontal distance. This isn’t problematic for sloped planes, but real-world topography is undulating. In general I would not recommend this method because of slope and time issues. Because this method directly yields (X,Y) coordinations, I won’t show examples in R.<br />
+<img src="site_content/img/blog_stem_mapping_1.gif" /></li>
 </ol>
 <p><br> 2. Fixed-reference stem-mapping<br />
-In this method, a reference point is chosen within the plot. By convention it is the southwest, often the lower left corner. Here the X-axis can also be the baseline. The azimuth from the reference point to the tree and distance from the reference point to the tree is measured. The figure below describes the process. Note that the azimuth <em>from</em> a source to the target <em>to</em> be mapped is called the foresight line. By convention, I use foresight line azimuths but it’s worth noting that some people measure backsight and some measure both (one can average the foresight angle and 360 minus the foresight angle to reduce measurement error).<br />
-<img src="site_content/img/blog_stem_mapping_2.gif" alt="Alt Text" /> <br> Using fixed-reference stem-mapping in this manner also requires identifying corners of a plot but no measuring tapes need to be laid out. Another disadvantage is that, because one measures angle from the same fixed point, if there are nearby obstructions, almost every tree is going to be obstructed. There is another approach that can speed-up the process of establishing a plot while reducing the likelihood of obstructions: the reference point can be placed in the middle of the plot. And, if the reference point’s coordinates are known with respect to an origin, an additional offset can be applied after tree coordinates are calculated (I will demonstrate this later). There are additional advantages to using a central reference point: corners of the plot do not need to be identified; therefore, the plot can take on any shape (or have no clear delineation at all).<br />
+In this method, a reference point is chosen within the plot. By convention it is the southwest, often the lower left corner. Here the X-axis can also be the baseline. The azimuth from the reference point to the tree and distance from the reference point to the tree is measured. The figure below describes the process. Note that the azimuth <em>from</em> a source <em>to</em> the target is called the foresight line. By convention, I use foresight line azimuths but it’s worth noting that some people measure backsight and some measure both (one can average the foresight angle and 360 minus the foresight angle to reduce measurement error).<br />
+<img src="site_content/img/blog_stem_mapping_2.gif" /> <br> Using fixed-reference stem-mapping in this manner also requires identifying corners of a plot but no measuring tapes need to be laid out. Another disadvantage is that, because one measures angle from the same fixed point, if there are obstructions next to the reference point, almost every tree is going to be obstructed. There is another approach that can speed-up the process of establishing a plot while reducing the likelihood of obstructions: the reference point can be placed in the middle of the plot. And, if the reference point’s coordinates are known with respect to an origin, an additional offset can be applied after tree coordinates are calculated (I will demonstrate this later). There are additional advantages to using a central reference point: corners of the plot do not need to be identified; therefore, the plot can take on any shape (or have no clear delineation at all).<br />
 <br> 3. Sequential-reference stem-mapping<br />
 The last method starts with a reference point, measures the azimuth and distance to a target tree. The reference point often is a tree. In this example, we’ll call the original reference tree A and the first target tree B. So the original azimuth-distance observation describes A-&gt;B. Then, the azimuth and distance to the next tree, C, is measured from B. Then, from C to D, the azimuth and distance is measured, and so on. This method is great because there is very little chance of obstruction between nearby trees as the distances will be small. In addition, there is no need to establish plot corners unless desired and the plot can take on whatever shape desired, if it has any shape at all. This method can also be made to fit within a delineated plot. After converting azimuth and distance observations to (X,Y) coordinates, one could offset all coordinates by the (X,Y) of the initial reference tree.<br />
-<img src="site_content/img/blog_stem_mapping_3.gif" alt="Alt Text" /></p>
-<div id="fixed-reference-stem-mapping" class="section level3">
-<h3>Fixed-reference stem-mapping</h3>
-<div id="from-a-corner" class="section level4">
-<h4>From a corner</h4>
+<img src="site_content/img/blog_stem_mapping_3.gif" /></p>
+</div>
+<div id="fixed-reference-stem-mapping" class="section level2">
+<h2>Fixed-reference stem-mapping</h2>
+<div id="from-a-corner" class="section level3">
+<h3>From a corner</h3>
 <p>I’ll demonstrate the methods and the calculations to convert azimuth-distance observations to (X,Y) coordinates starting with fixed-reference stem-mapping. Here <code>obs</code> includes the identity of trees, <code>treeNum</code>, <code>HD</code> is the horizontal distance from the reference point, and <code>AZ</code> is the azimuth from the reference point. The scenario here is that we are standing at (0,0), the plot is 70 m X 70 m, and we are measuring distance and azimuth from the origin to each tree. We will write a function to get our (X,Y) coordinates. Don’t dwell on the geometry but <em>it is important to recognize</em> that the specific equations we use depend whether the tree is in a northeast, southeast, southwest, or northwest quadrant from where we stand. Another thing to remember is that these trigonometric operators expect azimuth in radians whereas we almost always are measuring in degrees. So, if you see odd constants, they reference <span class="math inline">\(angle*\pi/180 = radians\)</span>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">obs =<span class="st"> </span><span class="kw">data.frame</span>(</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="dt">treeNum =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">15</span>),</a>
@@ -345,13 +348,13 @@ The last method starts with a reference point, measures the azimuth and distance
 <a class="sourceLine" id="cb1-21" data-line-number="21">XY =<span class="st"> </span><span class="kw">map.fixedRef</span>(obs<span class="op">$</span>HD,obs<span class="op">$</span>AZ)</a>
 <a class="sourceLine" id="cb1-22" data-line-number="22"><span class="kw">plot</span>(XY,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>))</a>
 <a class="sourceLine" id="cb1-23" data-line-number="23"><span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">70</span>,<span class="dv">70</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-1-1.png" width="672" /> <br></p>
+<p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-1-1.png" width="672" /> <br> The resulting plot shows the location of each tree with respect to (0,0).</p>
 </div>
-<div id="from-the-center" class="section level4">
-<h4>From the center</h4>
+<div id="from-the-center" class="section level3">
+<h3>From the center</h3>
 <p>Had our reference point been in the center of the plot we would have observed different horizontal distances and azimuthes. Let’s change those and then re-calculate (X,Y).</p>
-<div id="azimuth-and-distance-from-and-to-any-arbitrary-locations" class="section level5">
-<h5>Azimuth and distance from and to any arbitrary locations</h5>
+<div id="azimuth-and-distance-from-and-to-any-arbitrary-locations" class="section level4">
+<h4>Azimuth and distance from and to any arbitrary locations</h4>
 <p>We need to take a quick detour because I don’t have the data for you. Before we can move on, I need to figure out what the horizontal distances and azimuths are from the center. We need two pieces of information: the geographic center, which is the mean of the minima and maxima X and Y; and the difference in coordinate space between trees and the center. Again, there is some trig here that I won’t dive into.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">centerX =<span class="st"> </span>(<span class="kw">min</span>(XY<span class="op">$</span>x) <span class="op">+</span><span class="st"> </span><span class="kw">max</span>(XY<span class="op">$</span>x))<span class="op">/</span><span class="dv">2</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">centerY =<span class="st"> </span>(<span class="kw">min</span>(XY<span class="op">$</span>y) <span class="op">+</span><span class="st"> </span><span class="kw">max</span>(XY<span class="op">$</span>y))<span class="op">/</span><span class="dv">2</span></a>
@@ -366,8 +369,8 @@ The last method starts with a reference point, measures the azimuth and distance
 <a class="sourceLine" id="cb2-11" data-line-number="11">     <span class="kw">ifelse</span>(xdiff<span class="op">==</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&gt;</span><span class="dv">0</span>, <span class="fl">1.5</span><span class="op">*</span>pi, </a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">     <span class="kw">ifelse</span>(xdiff<span class="op">==</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>ydiff<span class="op">&lt;</span><span class="dv">0</span>, <span class="fl">.5</span><span class="op">*</span>pi, <span class="dv">0</span> )))))))<span class="op">*</span><span class="dv">180</span><span class="op">/</span>pi</a></code></pre></div>
 </div>
-<div id="back-to-your-regularly-scheduled-programming" class="section level5">
-<h5>Back to your regularly scheduled programming</h5>
+<div id="back-to-your-regularly-scheduled-programming" class="section level4">
+<h4>Back to your regularly scheduled programming</h4>
 <p>Now we can take the vectors of horizontal distance-azimuth relative to the center and plug them into our function.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">map.fixedRef</span>(obs<span class="op">$</span>HDcenter,obs<span class="op">$</span>AZcenter),<span class="dt">pch=</span><span class="dv">19</span>)</a></code></pre></div>
 <p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
@@ -377,9 +380,9 @@ The last method starts with a reference point, measures the azimuth and distance
 <p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 </div>
-<div id="going-further" class="section level4">
-<h4>Going further</h4>
-<p>Some stem-maps are huge. For example, I was able to help out with mapping the &gt;17 ha <a href="https://sites.warnercnr.colostate.edu/pfdp/">Pike Forest Dynamics Plot</a>. In this case, the plot had to be subdivided into a grid of subplots. For each subplot, a corner can become the reference point for subsets of trees. I’ll explain… Let’s say we have a 210 m x 70 m plot that is divided into three subplots of equal area; that’s 3x the size of the imaginary plot with have been working with. For this example, we will pretend we are in the middle subplot, thus our reference point is (70,0).</p>
+<div id="going-further" class="section level3">
+<h3>Going further</h3>
+<p>Some stem-maps are huge. For example, I was able to help out with mapping the &gt;17 ha <a href="https://sites.warnercnr.colostate.edu/pfdp/">Pike’s Peak Forest Dynamics Plot</a>. In this case, the plot had to be subdivided into a grid of subplots. For each subplot, a corner can become the reference point for subsets of trees. I’ll explain… Let’s say we have a 210 m x 70 m plot that is divided into three subplots of equal area; that’s 3x the size of the imaginary plot with have been working with. For this example, we will pretend we are in the middle subplot, thus our reference point is (70,0).</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">subplot =<span class="st"> </span><span class="kw">map.fixedRef</span>(obs<span class="op">$</span>HD,obs<span class="op">$</span>AZ, <span class="dt">refX=</span><span class="dv">70</span>,<span class="dt">refY=</span><span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">plot</span>(subplot,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">215</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">75</span>))</a>
@@ -389,9 +392,10 @@ The last method starts with a reference point, measures the azimuth and distance
 <p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 </div>
-<div id="sequential-reference-stem-mapping" class="section level3">
-<h3>Sequential-reference stem-mapping</h3>
-<p>I have no real-world experience with sequential stem-mapping but it looks much easier to do in the field. It’s best to imagine a chain of linked trees where we hop from one to the next during our measurements. <code>treeorigintarget</code> describes the pair of reference and target tree identities, <code>HD</code> is the horizontal distance between the trees, and <code>AZ</code> is azimuth from the reference tree to the target tree.</p>
+<div id="sequential-reference-stem-mapping" class="section level2">
+<h2>Sequential-reference stem-mapping</h2>
+<p>I have no real-world experience with sequential stem-mapping but it looks much easier to do in the field. To imagine how this method is conducted, it’s best to imagine a chain of linked trees. With each measurement we hop from one to the next.<br />
+In this example, <code>treeorigintarget</code> describes the pair of reference and target tree identities, <code>HD</code> is the horizontal distance between the trees, and <code>AZ</code> is azimuth from the reference tree to the target tree.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">obs =<span class="st"> </span><span class="kw">data.frame</span>(</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="dt">treeorigintarget =</span> <span class="kw">c</span>(<span class="st">&quot;(1-2)&quot;</span>, <span class="st">&quot;(2-3)&quot;</span>, <span class="st">&quot;(3-4)&quot;</span>, <span class="st">&quot;(4-5)&quot;</span>, <span class="st">&quot;(5-6)&quot;</span>, <span class="st">&quot;(6-7)&quot;</span>, <span class="st">&quot;(7-8)&quot;</span>, <span class="st">&quot;(8-9)&quot;</span>, <span class="st">&quot;(9-10)&quot;</span>, <span class="st">&quot;(10-11)&quot;</span>, <span class="st">&quot;(11-12)&quot;</span>, <span class="st">&quot;(12-13)&quot;</span>, <span class="st">&quot;(13-14)&quot;</span>, <span class="st">&quot;(14-15)&quot;</span>),</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">  <span class="dt">HD =</span> <span class="kw">c</span>(<span class="fl">8.6</span>, <span class="fl">8.5</span>, <span class="fl">2.6</span>, <span class="fl">11.9</span>, <span class="fl">13.8</span>, <span class="fl">6.9</span>, <span class="fl">0.4</span>, <span class="fl">13.4</span>, <span class="fl">22.8</span>, <span class="fl">3.9</span>, <span class="fl">11.1</span>, <span class="fl">1.4</span>, <span class="fl">11.1</span>, <span class="fl">1.8</span>),</a>
@@ -428,8 +432,8 @@ The last method starts with a reference point, measures the azimuth and distance
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">rect</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">70</span>,<span class="dv">70</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a></code></pre></div>
 <p><img src="blog-stem-mapping_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
-<div id="conclusion" class="section level3">
-<h3>Conclusion</h3>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
 <p>So there you have it. Now that you have walked through these steps you should be able to go out into the field and use your trusty compass and a laser rangefinder to grab distances and azimuths from any reference point trusting that you can convert these to (X,Y) coordinates. <br></p>
 </div>
 
