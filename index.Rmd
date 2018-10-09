@@ -1,6 +1,6 @@
 ---
-title: "EcoFire"
-author: "A Spatial Take on Forest & Fire Ecology"
+title: "as.numeric(ecology)"
+author: "reproducible research in natural resource ecology"
 output:
   html_document:
     excludes:
@@ -9,18 +9,6 @@ output:
       before_body: navbar_home.html
       after_body: footer.html
 ---
-<img id="img-me" src="site_content/img/headimg.PNG" width="700px" height="auto">
-
-> Forests are inherently complex ecosystems. If you were to look at a map of trees, understory plants, and the underlying topography, you couldn't help but identify spatial patterns and start to think there must be some reason why you see that pattern and not some other pattern. 
-
->I study dry forests in the Western US. It is increasingly recognized that trees are not randomly spaced in a forest. In fact, trees tend to display characteristic non-random patterns. This might have a big impact on forest dynamics, in other words how the forest will look in the future. And
-Big trees that are closer to each other might compete more intensely, or they might make a more tight knit canopy, shading and protecting the next generation. In addition, in these forests, it is clear that wildfires historically played a substantial role in shaping and maintaining forest structure. So for me, that begs many questions like: how does grouping alter fire behavior should a wildfire occur?; Should forest managers space out trees to reduce the risk of mortality for individual trees?; Or should managers look to the groupy and non-random historical forests in recognition that historic forests endured frequent fires over centuries?  
-
->These questions have led me to develop a suite of research questions that investigate spatial patterns in vegetation which arise from anthropogenic or natural processes. Specifically, my doctoral work asks what role wildfire plays in shaping these patterns and how managers can manipulate patterns to modify fire behavior. To answer these questions, I use a variety of tools such as spatial statistics, computational fluid dynamics fire behavior models, and scientific computing software. EcoFire is my platform to discuss the ideas in my research and the computational nitty-gritty with the public and to connect with fellow researchers.
-
-<br>
-<hr>
-<br>
 
 <a class="anchor" id="blog-posts"></a>
 
@@ -28,45 +16,31 @@ Big trees that are closer to each other might compete more intensely, or they mi
 <p>
 [<img src="site_content/img/blog-making-stem-maps.png" style="height:250px;">](blog-stem-mapping.html)
 [<img src="site_content/img/blog-forest-typing-with-stem-maps.png" style="height:250px;">](blog-forest-typing-with-stem-maps.html)
-[<img src="site_content/img/blog-making-stem-maps.png" style="height:250px;">]()
+[<img src="site_content/img/blog-stem-map-plot.png" style="height:250px;">](blog-spatstat-for-exploration.html)
 </p>
 <!-- <a class="btn btn-outline-secondary btn-lg" href="blog.html" role="button">More Posts</a> --> 
-
-
-<br>
-<hr>
-<br>
-
-<a class="anchor" id="research"></a>
-
-<h1>RESEARCH</h1>
-
-<iframe onload="resizeIframe(this)" src="https://ecofire.shinyapps.io/shinyresearch/" style="border: none; width: 900px; height: 1000px; display:block;"></iframe>
-
 
 <br>
 <hr>
 <br>
 
 <a class="anchor" id="about"></a>
-
-<h1>ABOUT ME</h1>
-
-<br>
-
-<img id="img-me" src="site_content/img/me.jpeg" width="250px" height="auto">
+<h1>ABOUT</h1>
 
 <br>
+<p></p>
+>`as.numeric(ecology)` was developed to allow graduate-level and early career ecologists and natural resource scientists a place to discuss and share *how* their work is accomplished. This is needed given the increased reliance on software coding, complex statistical analyses, and large datasets. This website serves as a place to share and discuss methods which are written in an explicitly reproducible manner.
 
-> My name is Justin Ziegler. I am the maintainer of the EcoFire website which describes my work as well as the EcoFire GitHub page where I share my code with the world. 
+>Why the need? Reproducibility is a major tenet of the scientific process. However, methods, which are key for reproducing research, are often underdescribed and given short shrift in research. Due in part to this, some fields in science are undergoing what is being described as a reproducilibilty crisis. To combat this, researchers are actively working with many journals and other platforms to build new ways to develop and detail their methods in full.
 
-I'm a doctoral student and research associate at Colorado State University. I have over a decade of professional experience in natural resources, performing tasks such as crusing forests, digging fireline, or writing silvicultural prescriptions. I current do forestry consulting for public and private landowners, and am a NRCS Technical Service Provider. During the majority of my time,, I study fire behavior, fire effects, and forest ecology through a spatial lens. My research bridges field ecology, taking me into the woods to measure trees, and numerical experimentation, where I write code and sometimes get flustered with fire simulations when I mess up parameterization. 
+Would you like to contribute? We are looking for graduate students and early career scientists in ecological fields that want to share their work. Topics can be brief or extended so long as they sufficiently detail a field, lab, or code based method. If you're interested, go ahead and [connect with us](mailto:Justin.Zieger@Colostate.edu). 
 
+<h2>Our authors</h2>
 <br>
-
-
-<a class="btn btn-outline-secondary btn-lg" href="vitae.html" role="button">Full Vitae</a>
-
+[**Justin Ziegler**](author-ziegler.html)
+<br>
+>>> I am the maintainer of `as.numeric(ecology)`. I study fire behavior and fire ecology using spatial statistical methods and computational fluid dynamics modelling. I am also a doctoral student and research associate at Colorado State University. See more about [my research here](author-ziegler.html).
+<br>
 
 <br>
 <hr>
