@@ -11,7 +11,7 @@ output:
 <img id="img-me" src="site_content/img/me.jpeg" width="250px" height="auto"> 
 
 <br>
-I'm a doctoral student and research associate at Colorado State University. I'm also the site maintainer. I have over a decade of professional experience in natural resources, performing tasks such as crusing forests, digging fireline, or writing silvicultural prescriptions. I current do forestry consulting for public and private landowners, and am a NRCS Technical Service Provider. During the majority of my working hours,, I study fire behavior, fire effects, and forest ecology through a spatial lens. My research bridges field ecology, taking me into the woods to measure trees, and numerical experimentation, where I write code and sometimes get flustered with fire simulations when I mess up parameterization.  
+I'm a doctoral student and research associate at Colorado State University. I'm also the site maintainer. I have over a decade of professional experience in natural resources, performing tasks such as cruising forests, digging fireline, or writing silvicultural prescriptions. I currently do forestry consulting for public and private landowners and am an NRCS Technical Service Provider. During the majority of my working hours, I study fire behavior, fire effects, and forest ecology through a spatial lens. My research bridges field ecology, taking me into the woods to measure trees, and numerical experimentation where I write code and sometimes get flustered with fire simulations when I mess up parameterization.  
 
 <a href="mailto:Justin.Zieger@Colostate.edu">
 <i class="fa fa-send fa-lg"></i> Connect with me</a>

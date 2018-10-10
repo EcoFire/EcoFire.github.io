@@ -39,7 +39,7 @@ Would you like to contribute? We are looking for graduate students and early car
 <br>
 [**Justin Ziegler**](author-ziegler.html)
 <br>
->>> I am the maintainer of `as.numeric(ecology)`. I study fire behavior and fire ecology using spatial statistical methods and computational fluid dynamics modelling. I am also a doctoral student and research associate at Colorado State University. See more about [my research here](author-ziegler.html).
+>>> I am the maintainer of `as.numeric(ecology)`. I am also a doctoral student and research associate at Colorado State University. I study fire behavior and fire ecology using spatial statistical methods and computational fluid dynamics modelling. See more about [my research here](author-ziegler.html).
 <br>
 
 <br>
